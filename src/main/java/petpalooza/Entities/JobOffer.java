@@ -21,7 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 
-public class JobOffer {
+public class JobOffer implements Serializable  {
 
 
     @Id

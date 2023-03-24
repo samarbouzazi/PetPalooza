@@ -11,7 +11,7 @@ import petpalooza.Entities.User;
 @Entity
 @Table(name = "Event")
 @Data
-public class Event  {
+public class Event implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

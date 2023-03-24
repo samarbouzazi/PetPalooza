@@ -18,7 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class User {
+public class User implements Serializable  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

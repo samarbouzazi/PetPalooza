@@ -20,7 +20,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Animal {
+public class Animal implements Serializable  {
 
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)

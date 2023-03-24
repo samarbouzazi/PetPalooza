@@ -20,7 +20,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Appointment {
+public class Appointment implements Serializable  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long idAppointment;
