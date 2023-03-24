@@ -9,6 +9,7 @@ import java.util.Date;
 import petpalooza.Entities.User;
 
 @Entity
+@Table(name = "Event")
 @Data
 public class Event implements Serializable {
 
@@ -29,7 +30,7 @@ public class Event implements Serializable {
     @Temporal (TemporalType.DATE)
     private Date dateFin;
 
-    @ManyToOne
+  @ManyToOne
     @JsonIgnore
-    User user;
+   User user;
 }
