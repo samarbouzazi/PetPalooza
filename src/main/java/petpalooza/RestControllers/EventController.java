@@ -13,6 +13,9 @@ import java.util.List;
 
 @RestController
 @Data
+@CrossOrigin
+@RequestMapping("admin")
+
 public class EventController {
     @Autowired
     IEvent iEvent;
