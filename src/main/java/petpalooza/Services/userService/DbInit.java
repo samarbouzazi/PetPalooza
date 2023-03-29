@@ -39,11 +39,10 @@ public class DbInit  implements CommandLineRunner {
         List<Role> roles=Arrays.asList(RoleManager,RoleAdmin,RoleUser, RoleAssocition);
         this.roleRepository.saveAll(roles);
 
-Set<Role> r1=new HashSet<>();
+     Set<Role> r1=new HashSet<Role>();
 
         r1.add(RoleAdmin);
         r1.add(RoleUser);
-
         Set<Role> r2=new HashSet<>();
         r2.add(RoleUser);
         Set<Role> r3=new HashSet<>();
