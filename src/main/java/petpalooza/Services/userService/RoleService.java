@@ -18,7 +18,6 @@ public class RoleService  implements IRole {
 
     @Override
     public void affectRoleToUser() {
-
     }
 
     @Override

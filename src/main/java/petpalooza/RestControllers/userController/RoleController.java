@@ -1,11 +1,9 @@
 package petpalooza.RestControllers.userController;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import petpalooza.Entities.Role;
+import petpalooza.Entities.User;
 import petpalooza.interfaces.IRole;
 
 import java.util.List;
@@ -21,4 +19,6 @@ public class RoleController {
     public List<Role> listOfRoles(){
        return iRole.findRoles();
     }
+
+
 }

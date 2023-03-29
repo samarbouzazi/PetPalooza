@@ -14,4 +14,7 @@ public interface IUser {
     void deleteUser( Long idUser);
 
     User findUserByID(Long idUser);
+
+    Boolean usernameAlreadyExist(String username);
+    Boolean emailExist(String email);
 }
