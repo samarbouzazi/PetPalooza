@@ -1,5 +1,6 @@
 package petpalooza.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -59,10 +60,12 @@ public class User implements Serializable  {
     ///////////////////////Event Samar/////////////
     @OneToMany(mappedBy = "user")
     List<Event> events;
-   //////////////////ISlem/////////////////
+   //////////////////Islem/////////////////
     @OneToMany(cascade = CascadeType.ALL, mappedBy="userAnimal")
     private Set<Animal> animals;
-
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    List<RatingAnimal> ratings;
 
 ///////////////Malek//////////////
 
