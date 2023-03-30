@@ -2,6 +2,7 @@ package petpalooza.Entities;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -32,8 +33,10 @@ public class Animal implements Serializable  {
     String gender;
     String image;
 
-@ManyToOne
+    @ManyToOne
     User userAnimal;
 
-
+    @OneToMany(mappedBy = "animal")
+    @JsonIgnore
+    List<RatingAnimal> ratings;
 }
