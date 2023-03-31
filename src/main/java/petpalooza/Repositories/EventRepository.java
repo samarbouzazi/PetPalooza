@@ -7,5 +7,5 @@ import petpalooza.Entities.User;
 import java.util.List;
 
 public interface EventRepository extends JpaRepository<Event,Long> {
-    public List<User> retrieveallusersofevent (Event event);
+//    public List<User> retrieveallusersofevent (Event event);
 }
