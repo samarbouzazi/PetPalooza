@@ -1,4 +1,4 @@
-package petpalooza.Services.userServices;
+package petpalooza.Services;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,13 +7,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import petpalooza.Entities.User;
 import petpalooza.Repositories.UserRepository;
-import petpalooza.Services.IUser;
 
 import java.util.List;
 
 @Service
 @Data
-public class UserService implements IUser {
+public class UserService implements IUser{
 
     @Autowired
     UserRepository userRepository;
