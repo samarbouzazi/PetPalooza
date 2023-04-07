@@ -78,6 +78,19 @@ public class UserService implements IUser{
         }
         return false;
     }
+
+    @Override
+    public void blockUser(Long idUser) {
+        User user=new User();
+        user=userRepository.findById(idUser).orElse(null);
+
+        user.setActive(0);
+
+        userRepository.save(user);
+        System.out.println("\n user blocked succesfully!!!");
+
+
+    }
 }
 
 

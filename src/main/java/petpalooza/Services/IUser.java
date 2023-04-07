@@ -18,4 +18,6 @@ public interface IUser {
 
     Boolean usernameAlreadyExist(String username);
     Boolean emailExist(String email);
+
+    void blockUser(Long idUser);
 }
