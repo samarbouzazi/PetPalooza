@@ -28,6 +28,7 @@ public class User implements Serializable  {
     String username;
     @Column(nullable = false)
     String password;
+
     String resetPasswordToken;
 
     String firstName;
@@ -35,7 +36,7 @@ public class User implements Serializable  {
     String email;
     Gender gender;
     String occupation;
-    int active;
+    int active =1;
     String phone;
     @Temporal(TemporalType.DATE)
     Date birthDate;
