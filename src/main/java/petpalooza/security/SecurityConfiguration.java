@@ -42,27 +42,29 @@ public class SecurityConfiguration  {
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         //disactivate  the security
-        return http.csrf().disable().authorizeRequests().anyRequest().permitAll().and().build();
+        return
+                //http.csrf().disable().authorizeRequests().anyRequest().permitAll().and().build();
 
-//
-//                http
-//                .csrf().disable()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                //remove csrf and state in session because jwt  do not need  them
-//
-//                .and()
-//                .addFilter(new JwtAuthenticationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class))))
-//                .addFilter(new JwtAuthorizationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), this.userRepository))
-//                .authorizeRequests()
-//                .antMatchers("/login").permitAll().
-//                antMatchers("/api/test/user").authenticated().
-////                .antMatchers("/api/test/manager").hasRole("MANAGEMENT").
-//                antMatchers("/api/test/admin").hasRole("ADMIN").
-//                antMatchers("/api/test/mod").hasRole("MANAGER").
-//                and()
-//                .build()
-//
-//                ;
+
+                http
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                //remove csrf and state in session because jwt  do not need  them
+
+                .and()
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class))))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), this.userRepository))
+                .authorizeRequests()
+                .antMatchers("/login").permitAll().
+                        antMatchers("/public/user/*").permitAll().
+                antMatchers("/api/test/user").authenticated().
+//                .antMatchers("/api/test/manager").hasRole("MANAGEMENT").
+                antMatchers("/api/test/admin").hasRole("ADMIN").
+                antMatchers("/api/test/mod").hasRole("MANAGER").
+                and()
+                .build()
+
+                ;
 
 
 
