@@ -70,11 +70,6 @@ public class ForgetPaswordController {
         helper.setFrom("timoumimahmoud616@gmail.com", "Admin ");
         helper.setTo(email);
         String subject= "here is the link to reset your password";
-        String content ="<h2 style=\" color: red;\"> Hello , </h2> "+
-                "<p> you have requested to change your password </p> "
-                +"<p> Click the link below to change </p>"
-                +"<p>  <a href=\""+resetPassworkLink+"\"> Change my password</a> </p>"
-                +"<p>  ignore this email if you do remember you password </p>";
 
 
         String con="\n" +
@@ -176,17 +171,13 @@ public class ForgetPaswordController {
 
     @PostMapping("/reset_password")
     public ResponseEntity<?>  processResetPassword(HttpServletRequest request) {
-//        ModelAndView mav = new ModelAndView("user/forget_password/message");
         String token = request.getParameter("token");
         String password = request.getParameter("password");
 
         User user = iForgetPwd.getByResetPasswordToken(token);
-//        mav.addObject("title", "Reset your password");
 
         if (user == null) {
-//            ModelAndView mavMessage = new ModelAndView("user/forget_password/message.html");
 
-//            mavMessage.addObject("title", "Reset your password");
             String  mesg= "Invalid Token";
 
             return ResponseEntity.ok(mesg);
