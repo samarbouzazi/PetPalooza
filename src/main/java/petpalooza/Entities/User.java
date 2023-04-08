@@ -36,7 +36,7 @@ public class User implements Serializable  {
     String email;
     Gender gender;
     String occupation;
-    int active =1;
+    int active =0;
     String phone;
     @Temporal(TemporalType.DATE)
     Date birthDate;
@@ -57,6 +57,13 @@ public class User implements Serializable  {
         roles.remove(this);
     }
 
+////chat ///////
+    @ManyToMany
+    @JoinTable(
+            name = "user_chat",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "idMessage"))
+    Set<ChatMessage> chatMessageSet= new HashSet<>();
 
 
 
@@ -100,10 +107,13 @@ public class User implements Serializable  {
         this.address = address;
         this.roles=role;
     }
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password, String phone, String address, String occupation) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.phone=phone;
+        this.address=address;
+        this.occupation=occupation;
     }
 
     public int getActive() {
