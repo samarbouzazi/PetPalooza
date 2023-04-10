@@ -1,6 +1,7 @@
 package petpalooza.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
@@ -26,13 +27,18 @@ public class Appointment implements Serializable  {
     Long idAppointment;
     Date dateRDV;
 
+    double price;
+
+    String metting;
 
 
     /// idVter
    @ManyToOne
+   @JsonIgnore
     User userViternaire;
 
     @ManyToOne
+    @JsonIgnore
     User normalUser;
 
 

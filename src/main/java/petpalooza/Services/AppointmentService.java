@@ -59,4 +59,9 @@ public class AppointmentService implements IAppointment{
 
 
     }
+
+    @Override
+    public List<Appointment> TriByPrice() {
+        return appointmentRepository.PriceAsc();
+    }
 }

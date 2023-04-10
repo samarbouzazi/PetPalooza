@@ -19,4 +19,6 @@ public interface IAppointment {
 
 
     Appointment add2( Long idUser1, Long idUser2);
+
+    List<Appointment> TriByPrice();
 }

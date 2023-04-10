@@ -60,4 +60,10 @@ public class appointmentController {
     }
 
 
+    @GetMapping("price")
+    public List<Appointment> TrilistofAppointement(){
+        return iAppointment.TriByPrice();
+    }
+
+
 }
