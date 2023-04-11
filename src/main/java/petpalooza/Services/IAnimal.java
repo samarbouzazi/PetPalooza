@@ -19,5 +19,7 @@ public interface IAnimal {
     public List<RatingAnimal> getdislikes(Long idAnimal);
     public RatingAnimal likeUserToAnimal(long idAnimal, long idUser);
     public RatingAnimal rate(RatingAnimal ratingAnimal);
+    public Animal setInterested(long idAnimal, long idUser);
+
 
 }

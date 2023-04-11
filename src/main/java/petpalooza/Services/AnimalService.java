@@ -15,6 +15,8 @@ public class AnimalService implements IAnimal{
     AnimalRepository animalRepository;
     @Autowired
     RatingAnimalRepository ratingAnimalRepository;
+    @Autowired
+
     @Override
     public Animal addAnimal(Animal animal) {
         return this.animalRepository.save(animal);
@@ -82,6 +84,12 @@ public class AnimalService implements IAnimal{
     @Override
     public RatingAnimal rate (RatingAnimal ratingAnimal) {
         return this.ratingAnimalRepository.save(ratingAnimal);
+    }
+
+    @Override
+    public Animal setInterested(long idAnimal, long idUser) {
+
+        return null;
     }
 
 

@@ -39,4 +39,9 @@ public class Animal implements Serializable  {
     @OneToMany(mappedBy = "animal")
     @JsonIgnore
     List<RatingAnimal> ratings;
+
+    @ManyToMany(mappedBy = "interestedAnimals")
+    @JsonIgnore
+    List<User> interestedUsers;
+
 }
