@@ -9,4 +9,5 @@ public interface IUser {
     public User updateUser(User user);
     public User addeUser(User user);
     public void deletUser(Long id);
+    public User getById(long id);
 }
