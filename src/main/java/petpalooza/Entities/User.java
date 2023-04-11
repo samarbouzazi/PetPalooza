@@ -70,6 +70,10 @@ public class User implements Serializable  {
     @JsonIgnore
     List<RatingAnimal> ratings;
 
+    @ManyToMany
+    @JsonIgnore
+    List<Animal> interestedAnimals;
+
 ///////////////Malek//////////////
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="userOffer")
