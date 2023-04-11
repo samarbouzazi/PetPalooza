@@ -69,9 +69,8 @@ public class User implements Serializable  {
 
 ///////////////Malek//////////////
 
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy="userOffer")
-    private Set<JobOffer> jobOfferss;
+    private List<JobOffer> jobOfferss;
 
     /////////Iskander/////////////
     @OneToMany
