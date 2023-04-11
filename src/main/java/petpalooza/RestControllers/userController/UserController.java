@@ -1,4 +1,4 @@
-package petpalooza.RestControllers;
+package petpalooza.RestControllers.userController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

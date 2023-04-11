@@ -1,5 +1,6 @@
 package petpalooza.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -43,14 +44,17 @@ public class User implements Serializable {
         MALE,FEMALE
     }
 
-    @ManyToMany(targetEntity = Role.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH} ,
-            fetch = FetchType.EAGER )
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "id_user"),
-            inverseJoinColumns = @JoinColumn(name = "id_role")
-    )
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(  name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+    @PreRemove
+    public void removeRoles() {
+        this.roles.remove(roles);
+        roles.remove(this);
+    }
 
 
 
@@ -66,23 +70,59 @@ public class User implements Serializable {
     @ManyToMany(mappedBy = "participants",cascade = CascadeType.ALL)
     private Set<Event> eventsParticipating;
 
+   //////////////////Islem/////////////////
 
-   //////////////////ISlem/////////////////
     @OneToMany(cascade = CascadeType.ALL, mappedBy="userAnimal")
     private Set<Animal> animals;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    List<RatingAnimal> ratings;
 
+    @ManyToMany
+    @JsonIgnore
+    List<Animal> interestedAnimals;
 
 ///////////////Malek//////////////
 
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy="userOffer")
-    private Set<JobOffer> jobOfferss;
+    private List<JobOffer> jobOfferss;
 
     /////////Iskander/////////////
     @OneToMany
     List<Appointment> appointments;
 
 
+
+
+
+
+    public User(long idUser, String username, String password, String firstName, String lastName, String email, Gender gender, String occupation, int active, String phone, String address, Set<Role> role) {
+        this.idUser = idUser;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.gender = gender;
+        this.occupation = occupation;
+        this.active = active;
+        this.phone = phone;
+        this.address = address;
+        this.roles=role;
+    }
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
 }
 
 

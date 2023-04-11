@@ -6,10 +6,9 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
+
 import java.util.Set;
 
-import petpalooza.Entities.User;
 
 @Entity
 @Table(name = "Event")
