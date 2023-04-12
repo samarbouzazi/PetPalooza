@@ -6,7 +6,6 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import petpalooza.Entities.User;
 
 @Entity
 @Table(name = "Event")
@@ -31,6 +30,6 @@ public class Event implements Serializable {
     private Date dateFin;
 
   @ManyToOne
-    @JsonIgnore
+  @JsonIgnore
    User user;
 }
