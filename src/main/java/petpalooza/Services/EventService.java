@@ -85,4 +85,9 @@ public class EventService implements IEvent {
 
     }
 
+    @Override
+    public List<Event> getEventsByParticipants() {
+        return eventRepository.findAllByOrderByParticipantsDesc();
+    }
+
 }
