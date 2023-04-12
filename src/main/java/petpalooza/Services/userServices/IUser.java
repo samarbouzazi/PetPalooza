@@ -24,4 +24,6 @@ public interface IUser {
     void blockUser(Long idUser);
 //    List<User> findbyRoles(String roles);
 
+    void SignalUser(Long idUser);
+
 }
