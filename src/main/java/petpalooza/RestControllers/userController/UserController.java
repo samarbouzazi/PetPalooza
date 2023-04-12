@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import petpalooza.Entities.User;
 import petpalooza.RestControllers.userController.RequestAndResponse.MessageResponse;
-import petpalooza.Services.IUser;
+import petpalooza.Services.userServices.IUser;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -52,6 +52,7 @@ public class UserController {
         iUser.blockUser(id);
         return ResponseEntity.ok(new MessageResponse("user blocked"));
     }
+
 
 
 

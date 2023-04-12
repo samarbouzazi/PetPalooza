@@ -2,8 +2,11 @@ package petpalooza.Repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import petpalooza.Entities.ERole;
+import petpalooza.Entities.Role;
 import petpalooza.Entities.User;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,8 +20,13 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
 
     Boolean existsByEmail(String email);
+    User findByEmail(String email);
+    User findByResetPasswordToken( String tocken);
 
-     User findByEmail(String email);
-   User findByResetPasswordToken( String tocken);
+
+   ///////////
+
+//    List<User> findByRoleName(ERole name);
+
 
 }

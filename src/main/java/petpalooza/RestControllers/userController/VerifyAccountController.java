@@ -1,21 +1,17 @@
 package petpalooza.RestControllers.userController;
 
 
-import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import petpalooza.Entities.User;
-import petpalooza.Services.IForgetPwd;
-import petpalooza.Services.IVerifyAccount;
+import petpalooza.Services.userServices.IVerifyAccount;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -110,7 +106,7 @@ static  String linkk="";
                 "\n" +
                 "                    <h1 style=\"color:#455056; font-weight:500; margin-top:2px;font-size:18px;font-family:Arial, Helvetica, sans-serif;text-align:center ; line-height:2\"><span style=\"font-weight:750; color:#ff7a59\">Happy Learning!!!</span> </h1>\n" +
                 "\n" +
-                "                    <h1 style=\"color:#455056; font-weight:500; margin-top:2px;font-size:15px;font-family:Arial, Helvetica, sans-serif;text-align:start ; line-height:2\">Cheers, <span style=\"font-weight:750; color:#3574e3\">utobo Inc.</span> </h1>\n" +
+                "                    <h1 style=\"color:#455056; font-weight:500; margin-top:2px;font-size:15px;font-family:Arial, Helvetica, sans-serif;text-align:start ; line-height:2\">Cheers, <span style=\"font-weight:750; color:#3574e3\">ByteStorm Inc.</span> </h1>\n" +
                 "                    </p>\n" +
                 "                  </td>\n" +
                 "                </tr>\n" +
@@ -123,7 +119,7 @@ static  String linkk="";
                 "                    <i class=\"fa fa-youtube-play\" style=\"font-size:24px ;color:white\"></i>\n" +
                 "\n" +
                 "                    <br><br>\n" +
-                "                    <h1 style=\"color:white;padding:0 35px; font-weight:500; margin-top:2px;font-size:15px;font-family:'Rubik',sans-serif;vertical-align:start; line-height:2\">Utobo Inc, 800 W El Camino Real, Suite 180, Mountain View, California 94040, United States, +1(415) 707-8933 </h1>\n" +
+                "                    <h1 style=\"color:white;padding:0 35px; font-weight:500; margin-top:2px;font-size:15px;font-family:'Rubik',sans-serif;vertical-align:start; line-height:2\">Tunisia  Ariana , 800 W El Camino , +(216) 21-431-055 </h1>\n" +
                 "                    <br>\n" +
                 "                  </td>\n" +
                 "                </tr>\n" +

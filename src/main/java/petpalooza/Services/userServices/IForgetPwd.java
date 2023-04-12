@@ -1,4 +1,4 @@
-package petpalooza.Services;
+package petpalooza.Services.userServices;
 
 import petpalooza.Entities.User;
 

@@ -1,4 +1,4 @@
-package petpalooza.Services;
+package petpalooza.Services.userServices;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +91,8 @@ public class UserService implements IUser{
 
 
     }
+
+
 }
 
 

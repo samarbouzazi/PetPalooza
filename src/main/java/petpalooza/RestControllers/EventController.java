@@ -4,10 +4,8 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import petpalooza.Entities.Event;
-import petpalooza.Entities.User;
-import petpalooza.Services.EventService;
 import petpalooza.Services.IEvent;
-import petpalooza.Services.IUser;
+import petpalooza.Services.userServices.IUser;
 
 import java.util.List;
 

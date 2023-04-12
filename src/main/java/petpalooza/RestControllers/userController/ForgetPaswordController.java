@@ -11,7 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import petpalooza.Entities.User;
 import petpalooza.Repositories.UserRepository;
-import petpalooza.Services.IForgetPwd;
+import petpalooza.Services.userServices.IForgetPwd;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
