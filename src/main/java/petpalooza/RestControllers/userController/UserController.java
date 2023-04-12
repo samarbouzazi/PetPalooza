@@ -38,12 +38,16 @@ public class UserController {
         return iUser.getAllUser();
     }
 
+    @GetMapping("/findbyID/{id}")
+    public User getUserByID(@PathVariable("id") Long id){
+        return iUser.findUserByID(id);
+    }
 
     @DeleteMapping("delete/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable("id")  Long id){
         return ResponseEntity.ok(new MessageResponse("User "+
                 iUser.findUserByID(id).getUsername()
-                +"delete it  successfully!!!"));
+                +"  delete it  successfully!!!"));
     }
 
     @PutMapping("block/{id}")
