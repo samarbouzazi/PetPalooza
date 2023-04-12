@@ -58,7 +58,10 @@ public class UserController {
     }
 
 
-
-
+@PutMapping("signalUser/{idUser}")
+    public void ReportAUser(@PathVariable("idUser") Long idUser)
+{
+    iUser.SignalerUser(idUser);
+}
 
 }

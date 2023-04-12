@@ -41,6 +41,8 @@ public class User implements Serializable  {
     @Temporal(TemporalType.DATE)
     Date birthDate;
     String address;
+
+    int numberOfSignal;
     public enum Gender{
         MALE,FEMALE
     }
@@ -122,6 +124,15 @@ public class User implements Serializable  {
 
     public void setActive(int active) {
         this.active = active;
+    }
+
+
+    public int getNumberOfSignal() {
+        return numberOfSignal;
+    }
+
+    public void setNumberOfSignal(int numberOfSignal) {
+        this.numberOfSignal = numberOfSignal;
     }
 }
 
