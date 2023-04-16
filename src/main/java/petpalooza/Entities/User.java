@@ -43,6 +43,9 @@ public class User implements Serializable  {
     String address;
 
     int numberOfSignal;
+
+
+
     public enum Gender{
         MALE,FEMALE
     }
@@ -95,28 +98,35 @@ public class User implements Serializable  {
 
 
 
-    public User(long idUser, String username, String password, String firstName, String lastName, String email, Gender gender, String occupation, int active, String phone, String address, Set<Role> role) {
-        this.idUser = idUser;
+//    public User(long idUser, String username, String password, String firstName, String lastName, String email, Gender gender, String occupation, int active, String phone, String address, Set<Role> role) {
+//        this.idUser = idUser;
+//        this.username = username;
+//        this.password = password;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.email = email;
+//        this.gender = gender;
+//        this.occupation = occupation;
+//        this.active = active;
+//        this.phone = phone;
+//        this.address = address;
+//        this.roles=role;
+//    }
+//    public User(String username, String email, String password, String phone, String address, String occupation) {
+//        this.username = username;
+//        this.email = email;
+//        this.password = password;
+//        this.phone=phone;
+//        this.address=address;
+//        this.occupation=occupation;
+//    }
+
+    public User(String username, String email, String password) {
         this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.gender = gender;
-        this.occupation = occupation;
-        this.active = active;
-        this.phone = phone;
-        this.address = address;
-        this.roles=role;
-    }
-    public User(String username, String email, String password, String phone, String address, String occupation) {
-        this.username = username;
         this.email = email;
         this.password = password;
-        this.phone=phone;
-        this.address=address;
-        this.occupation=occupation;
     }
+
 
     public int getActive() {
         return active;

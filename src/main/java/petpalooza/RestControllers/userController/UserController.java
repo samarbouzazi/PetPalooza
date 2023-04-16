@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import petpalooza.Entities.User;
-import petpalooza.RestControllers.userController.RequestAndResponse.MessageResponse;
 import petpalooza.Services.userServices.IUser;
+import petpalooza.security.payload.response.MessageResponse;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

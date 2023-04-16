@@ -44,7 +44,7 @@ public class ForgetPaswordController {
         try {
             iForgetPwd.updateResetPasswordToken(token,usermane);
             //generate reset password link based on token
-            String resetPassworkLink = Utility.getSiteURL(request)+ "http://localhost:8088/"+"reset_password?token="+ token ;
+            String resetPassworkLink = Utility.getSiteURL(request)+ "http://localhost:8881/"+"reset_password?token="+ token ;
 
 
             System.out.printf("\n ---------" +
