@@ -2,6 +2,8 @@ package petpalooza.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -12,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import petpalooza.Repositories.UserRepository;
 import petpalooza.security.jwt.JwtAuthenticationFilter;
 import petpalooza.security.jwt.JwtAuthorizationFilter;
@@ -21,6 +24,7 @@ import petpalooza.security.predifineInterfaces.UserPrincipalDetailsService;
 @EnableWebSecurity
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@Import(CorsConf.class)
 public class SecurityConfiguration  {
 
     private UserRepository userRepository;
@@ -38,13 +42,13 @@ public class SecurityConfiguration  {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-    @Bean
-    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
-        //   to activate the security to activate it comment from line 49 ---->68
-        //to disactivate security decomment the line bellow
-
-                 return http.csrf().disable().authorizeRequests().anyRequest().permitAll().and().build();
-
+//    @Bean
+//    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
+//        //   to activate the security to activate it comment from line 49 ---->68
+//        //to disactivate security decomment the line bellow
+//
+////                 return http.csrf().disable().authorizeRequests().anyRequest().permitAll().and().build();
+//
 //        return
 //                http
 //                .csrf().disable()
@@ -65,16 +69,40 @@ public class SecurityConfiguration  {
 //                .build()
 //
 //                ;
-
-
-
-    }
+//
+//
+//
+//    }
 
     //  "/path/**"
     //the order of antMatchers is so important for example if i put  anyRequest().permetAll() at the beginning of the chain
 
 
 
+    @Bean
+    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
+        // Disable CSRF protection
+        http.csrf().disable();
+        http.cors().disable();
+
+        // Allow CORS for the /login endpoint
+        http.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/enter/enter").permitAll();
+
+
+        // Set up JWT authentication and authorization filters
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class))))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), this.userRepository))
+                .authorizeRequests()
+                .antMatchers("/public/user/*").permitAll()
+                .antMatchers("/api/test/user", "/logout").authenticated()
+                .antMatchers("/api/test/admin").hasRole("ADMIN")
+                .antMatchers("/api/test/mod").hasRole("MANAGER");
+
+        // Return the SecurityFilterChain
+        return http.build();
+    }
 
 
 
