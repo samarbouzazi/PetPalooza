@@ -19,7 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class User implements Serializable  {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -75,14 +75,26 @@ public class User implements Serializable  {
 
 
     ///////////////////////Event Samar/////////////
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "owner",cascade = CascadeType.ALL)
     List<Event> events;
+
+    @ManyToMany(mappedBy = "interestedUsers" ,cascade = CascadeType.ALL)
+    private Set<Event> eventInterested;
+
+    @ManyToMany(mappedBy = "participants",cascade = CascadeType.ALL)
+    private Set<Event> eventsParticipating;
+
    //////////////////Islem/////////////////
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy="userAnimal")
     private Set<Animal> animals;
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     List<RatingAnimal> ratings;
+
+    @ManyToMany
+    @JsonIgnore
+    List<Animal> interestedAnimals;
 
 ///////////////Malek//////////////
 

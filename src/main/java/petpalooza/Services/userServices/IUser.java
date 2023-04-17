@@ -8,6 +8,9 @@ import java.util.List;
 
 public interface IUser {
     public List<User> retrieveallUsers();
+
+
+
     List<User> getAllUser();
 
     User addNewUser(User user);
@@ -25,5 +28,7 @@ public interface IUser {
 //    List<User> findbyRoles(String roles);
 
     void SignalerUser(Long idUser);
+
+
 
 }

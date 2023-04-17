@@ -28,6 +28,8 @@ public class UserController {
         iUser.updateUser(user);
         response.sendRedirect("http://localhost:8888/admin/list");
     }
+
+
     @GetMapping("/find/{idUser}")
     public User retriveUserByID(@PathVariable("idUser")  Long idUser){
         return  iUser.findUserByID(idUser);
