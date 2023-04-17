@@ -1,4 +1,4 @@
-package petpalooza.RestControllers.userController.RequestAndResponse;
+package petpalooza.security.payload.response;
 
 public class MessageResponse {
   private String message;

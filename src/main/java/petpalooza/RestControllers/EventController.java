@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import petpalooza.Entities.Event;
 import petpalooza.Entities.User;
 import petpalooza.Services.IEvent;
-import petpalooza.Services.IUser;
+import petpalooza.Services.userServices.IUser;
 
 import javax.websocket.server.PathParam;
 import java.util.List;

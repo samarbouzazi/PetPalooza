@@ -7,6 +7,7 @@ import petpalooza.Entities.Event;
 import petpalooza.Entities.User;
 import petpalooza.Repositories.EventRepository;
 import petpalooza.Repositories.UserRepository;
+import petpalooza.Services.userServices.IUser;
 
 import java.util.List;
 import java.util.Set;
