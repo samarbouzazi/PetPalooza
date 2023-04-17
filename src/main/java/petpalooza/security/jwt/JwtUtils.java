@@ -14,11 +14,11 @@ import java.util.Date;
 public class JwtUtils {
   private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-  @Value("${Timoumi.app.jwtSecret}")
-  private String jwtSecret;
 
-  @Value("${Timoumi.app.jwtExpirationMs}")
-  private int jwtExpirationMs;
+  private String jwtSecret="bara123456789$$";
+
+
+  private int jwtExpirationMs = 86400000;
 
   public String generateJwtToken(Authentication authentication) {
 
@@ -55,3 +55,11 @@ public class JwtUtils {
     return false;
   }
 }
+
+
+/*
+
+
+Timoumi.app.jwtSecret= xxyzwtreeeeokjdfmksljjo$kdjf$
+Timoumi.app.jwtExpirationMs= 86400000
+ */
