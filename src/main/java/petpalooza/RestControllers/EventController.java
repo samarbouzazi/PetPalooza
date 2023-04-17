@@ -2,21 +2,26 @@ package petpalooza.RestControllers;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import petpalooza.Entities.Event;
-import petpalooza.Services.EventService;
+import petpalooza.Entities.User;
 import petpalooza.Services.IEvent;
+import petpalooza.Services.IUser;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
 @Data
-@CrossOrigin
 @RequestMapping("admin")
-
+@CrossOrigin
 public class EventController {
     @Autowired
     IEvent iEvent;
+    IUser iUser;
+
     @GetMapping("/affev")
     public List<Event> retrieveallEvents(){
         return iEvent.retrieveallEvents();
@@ -26,4 +31,31 @@ public class EventController {
     public Event addEvent(@RequestBody Event event){
         return iEvent.addeEvent(event);
     }
+
+    @PutMapping("/apdateev")
+    public Event updateEvent(@RequestBody Event event){
+        return iEvent.updateEvent(event);
+    }
+
+    @DeleteMapping("/delev/{id}")
+    public void deleteev(@PathVariable("id") Long id){
+        iEvent.deletEvent(id);
+    }
+
+
+    @PostMapping("/participer/{numEvent}/{idUser}")
+    public Event participer(@PathVariable("numEvent") Long numEvent, @PathVariable("idUser") Long idUser){
+        return iEvent.participer(numEvent,idUser);
+    }
+    @PostMapping("/interesser/{numEvent}/{idUser}")
+    public Event intersted(@PathVariable("numEvent") Long numEvent, @PathVariable("idUser") Long idUser){
+        return iEvent.interesser(numEvent,idUser);
+    }
+
+    @PostMapping("/tri")
+    public List<Event> sortEventsByParticipants(){
+        return iEvent.getEventsByParticipants();
+    }
+
+
 }

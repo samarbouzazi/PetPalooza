@@ -1,5 +1,6 @@
 package petpalooza.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -18,7 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class User implements Serializable  {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +28,7 @@ public class User implements Serializable  {
     String username;
     @Column(nullable = false)
     String password;
-    //String resetPasswordToken;
+    String resetPasswordToken;
 
     String firstName;
     String lastName;
@@ -43,7 +44,8 @@ public class User implements Serializable  {
         MALE,FEMALE
     }
 
-    @ManyToMany(fetch = FetchType.LAZY)
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(  name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -53,6 +55,42 @@ public class User implements Serializable  {
         this.roles.remove(roles);
         roles.remove(this);
     }
+
+
+
+
+
+    ///////////////////////Event Samar/////////////
+    @OneToMany(mappedBy = "owner",cascade = CascadeType.ALL)
+    List<Event> events;
+
+    @ManyToMany(mappedBy = "interestedUsers" ,cascade = CascadeType.ALL)
+    private Set<Event> eventInterested;
+
+    @ManyToMany(mappedBy = "participants",cascade = CascadeType.ALL)
+    private Set<Event> eventsParticipating;
+
+   //////////////////Islem/////////////////
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="userAnimal")
+    private Set<Animal> animals;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    List<RatingAnimal> ratings;
+
+    @ManyToMany
+    @JsonIgnore
+    List<Animal> interestedAnimals;
+
+///////////////Malek//////////////
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="userOffer")
+    private List<JobOffer> jobOfferss;
+
+    /////////Iskander/////////////
+    @OneToMany
+    List<Appointment> appointments;
+
 
 
 
@@ -72,30 +110,19 @@ public class User implements Serializable  {
         this.address = address;
         this.roles=role;
     }
-
-    public void setActive(int active) {
-        this.active = 1;
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
     }
 
-    ///////////////////////Event Samar/////////////
-    @OneToMany(mappedBy = "user")
-    List<Event> events;
-   //////////////////ISlem/////////////////
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="userAnimal")
-    private Set<Animal> animals;
+    public int getActive() {
+        return active;
+    }
 
-
-///////////////Malek//////////////
-
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="userOffer")
-    private Set<JobOffer> jobOfferss;
-
-    /////////Iskander/////////////
-    @OneToMany
-    List<Appointment> appointments;
-
-
+    public void setActive(int active) {
+        this.active = active;
+    }
 }
 
 

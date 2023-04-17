@@ -6,7 +6,9 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import petpalooza.Entities.User;
+
+import java.util.Set;
+
 
 @Entity
 @Table(name = "Event")
@@ -22,7 +24,7 @@ public class Event implements Serializable {
 
     private String description;
 
-    private Integer nbParticipants;
+    private Integer MaxParticipants;
 
     @Temporal (TemporalType.DATE)
     private Date dateDebut;
@@ -30,7 +32,20 @@ public class Event implements Serializable {
     @Temporal (TemporalType.DATE)
     private Date dateFin;
 
-  @ManyToOne
+//    @ManyToOne(optional = false)
+//    @JsonIgnore
+//    User user;
+
+    @ManyToOne(optional = false)
+    User owner;
+
+
+    @ManyToMany()
     @JsonIgnore
-   User user;
+    private Set<User> interestedUsers ;
+
+    @ManyToMany()
+    @JsonIgnore
+    private Set<User> participants ;
+
 }
