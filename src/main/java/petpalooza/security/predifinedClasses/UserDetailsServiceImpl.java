@@ -1,4 +1,4 @@
-package petpalooza.security.predifineInterfaces;
+package petpalooza.security.predifinedClasses;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

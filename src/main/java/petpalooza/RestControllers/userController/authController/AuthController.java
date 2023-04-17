@@ -20,9 +20,8 @@ import petpalooza.security.payload.request.SignupRequest;
 
 import petpalooza.security.payload.response.JwtResponse;
 import petpalooza.security.payload.response.MessageResponse;
-import petpalooza.security.predifineInterfaces.UserDetailsImpl;
+import petpalooza.security.predifinedClasses.UserDetailsImpl;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;

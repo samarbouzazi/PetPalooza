@@ -1,4 +1,4 @@
-package petpalooza.security.predifineInterfaces;
+package petpalooza.security.predifinedClasses;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;

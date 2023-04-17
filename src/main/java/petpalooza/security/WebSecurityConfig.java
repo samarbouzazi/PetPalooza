@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import petpalooza.security.jwt.AuthEntryPointJwt;
 import petpalooza.security.jwt.AuthTokenFilter;
-import petpalooza.security.predifineInterfaces.UserDetailsServiceImpl;
+import petpalooza.security.predifinedClasses.UserDetailsServiceImpl;
 
 @Configuration
 @Import(WebMvcConfig.class)
