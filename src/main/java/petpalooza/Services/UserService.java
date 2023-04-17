@@ -45,10 +45,6 @@ public class UserService implements IUser{
         return userRepository.save(user);
     }
 
-    @Override
-    public User updateUser(User user) {
-        return userRepository.save(user);
-    }
 
     @Override
     public void deleteUser(Long idUser) {
@@ -78,13 +74,6 @@ public class UserService implements IUser{
             return true;
         }
         return false;
-    }
-
-    @Override
-    public User getById(long id) {
-
-        return userRepository.findById(id).get();
-
     }
 }
 

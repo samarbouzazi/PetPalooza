@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @Data
 @RequestMapping("admin")
+@CrossOrigin
 public class EventController {
     @Autowired
     IEvent iEvent;
@@ -49,6 +50,11 @@ public class EventController {
     @PostMapping("/interesser/{numEvent}/{idUser}")
     public Event intersted(@PathVariable("numEvent") Long numEvent, @PathVariable("idUser") Long idUser){
         return iEvent.interesser(numEvent,idUser);
+    }
+
+    @PostMapping("/tri")
+    public List<Event> sortEventsByParticipants(){
+        return iEvent.getEventsByParticipants();
     }
 
 

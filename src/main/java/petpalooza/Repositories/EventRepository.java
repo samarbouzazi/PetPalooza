@@ -7,4 +7,5 @@ import petpalooza.Entities.User;
 import java.util.List;
 
 public interface EventRepository extends JpaRepository<Event,Long> {
+    List<Event> findAllByOrderByParticipantsDesc();
 }

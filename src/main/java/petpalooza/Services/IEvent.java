@@ -13,6 +13,7 @@ public interface IEvent {
     public Event getById(long id);
     public Event participer(Long numEvent, Long idUser);
     public Event interesser(Long idEvent, Long idUser);
+    public List<Event> getEventsByParticipants();
 
 
 
