@@ -22,6 +22,7 @@ import petpalooza.security.payload.response.JwtResponse;
 import petpalooza.security.payload.response.MessageResponse;
 import petpalooza.security.predifineInterfaces.UserDetailsImpl;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
@@ -29,7 +30,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@CrossOrigin()
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -123,4 +124,17 @@ public class AuthController {
 
     return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
   }
+
+//  @PostMapping("/logout")
+//  public ResponseEntity<?> logout(HttpServletRequest request) {
+//    String authHeader = request.getHeader("Authorization");
+//    if (authHeader != null && authHeader.startsWith("Bearer ")) {
+//      String tokenValue = authHeader.substring(7);
+//      OAuth2AccessToken token = tokenStore.readAccessToken(tokenValue);
+//      tokenStore.removeAccessToken(token);
+//    }
+//    return ResponseEntity.ok().build();
+//  }
+
+
 }

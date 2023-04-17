@@ -3,6 +3,7 @@ package petpalooza.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -13,11 +14,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import petpalooza.security.jwt.AuthEntryPointJwt;
 import petpalooza.security.jwt.AuthTokenFilter;
 import petpalooza.security.predifineInterfaces.UserDetailsServiceImpl;
 
 @Configuration
+@Import(WebMvcConfig.class)
 @EnableGlobalMethodSecurity(
      securedEnabled = true,
      jsr250Enabled = true,
@@ -72,6 +75,10 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
             .antMatchers("/public/**").permitAll()
             .antMatchers("/api/admin/**").hasRole("ADMIN")
             .antMatchers("/api/mod/**").hasRole("MANAGER");
+//    http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/public/logout"));
+  http  .logout().logoutRequestMatcher(new AntPathRequestMatcher("/public/logout"))
+            .logoutSuccessUrl("/logout.done").deleteCookies("JSESSIONID")
+            .invalidateHttpSession(true);
 
     http.authenticationProvider(authenticationProvider());
 
