@@ -72,9 +72,9 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
         .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
         .authorizeRequests()
-            .antMatchers("/public/**").permitAll()
-            .antMatchers("/api/admin/**").hasRole("ADMIN")
-            .antMatchers("/api/mod/**").hasRole("MANAGER");
+            .antMatchers("/public/**","/private/user/public").permitAll()
+            .antMatchers("/private/user/admin").hasRole("ADMIN")
+            .antMatchers("/private/user/mod").hasRole("MANAGER").antMatchers("/private/user/profile").authenticated();
 //    http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/public/logout"));
   http  .logout().logoutRequestMatcher(new AntPathRequestMatcher("/public/logout"))
             .logoutSuccessUrl("/logout.done").deleteCookies("JSESSIONID")

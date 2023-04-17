@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin()
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/private/user")
 public class TestController {
-  @GetMapping("/all")
+  @GetMapping("/public")
   public String allAccess() {
     return "Public Content.";
   }
