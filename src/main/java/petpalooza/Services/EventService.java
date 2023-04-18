@@ -8,6 +8,7 @@ import petpalooza.Entities.User;
 import petpalooza.Repositories.EventRepository;
 import petpalooza.Repositories.UserRepository;
 
+import javax.validation.constraints.Null;
 import java.util.List;
 import java.util.Set;
 

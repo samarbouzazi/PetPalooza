@@ -6,6 +6,7 @@ import petpalooza.Entities.Animal;
 import petpalooza.Entities.RatingAnimal;
 import petpalooza.Repositories.AnimalRepository;
 import petpalooza.Repositories.RatingAnimalRepository;
+import petpalooza.Repositories.UserRepository;
 
 import java.util.List;
 @Service
@@ -16,6 +17,7 @@ public class AnimalService implements IAnimal{
     @Autowired
     RatingAnimalRepository ratingAnimalRepository;
     @Autowired
+    UserRepository userRepository;
 
     @Override
     public Animal addAnimal(Animal animal) {
