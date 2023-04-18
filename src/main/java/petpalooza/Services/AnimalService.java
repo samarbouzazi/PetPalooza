@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import petpalooza.Entities.Animal;
 import petpalooza.Entities.RatingAnimal;
+import petpalooza.Entities.User;
 import petpalooza.Repositories.AnimalRepository;
 import petpalooza.Repositories.RatingAnimalRepository;
+import petpalooza.Repositories.UserRepository;
 
 import java.util.List;
 @Service
@@ -15,6 +17,8 @@ public class AnimalService implements IAnimal{
     AnimalRepository animalRepository;
     @Autowired
     RatingAnimalRepository ratingAnimalRepository;
+    @Autowired
+    UserRepository userRepository;
     @Override
     public Animal addAnimal(Animal animal) {
         return this.animalRepository.save(animal);
@@ -82,6 +86,23 @@ public class AnimalService implements IAnimal{
     @Override
     public RatingAnimal rate (RatingAnimal ratingAnimal) {
         return this.ratingAnimalRepository.save(ratingAnimal);
+    }
+
+    @Override
+    public Animal setInterested(long idAnimal, long idUser) {
+        User user = userRepository.findById(idUser).get();
+        Animal animal = animalRepository.findById(idAnimal).get();
+        for (User u : animal.getInterestedUsers()
+             ) {
+            if (u.equals(user)){
+                return null;
+            }
+        }
+        user.getInterestedAnimals().add(animal);
+        animal.getInterestedUsers().add(user);
+        userRepository.save(user);
+        return animalRepository.save(animal);
+
     }
 
 

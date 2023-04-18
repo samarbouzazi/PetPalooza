@@ -11,8 +11,8 @@ import petpalooza.Entities.Event;
 import petpalooza.Entities.User;
 import petpalooza.Services.AppointmentService;
 import petpalooza.Services.IAppointment;
-import petpalooza.Services.IUser;
-import petpalooza.Services.UserService;
+
+import petpalooza.Services.userServices.IUser;
 
 import java.io.IOException;
 import java.time.LocalDateTime;

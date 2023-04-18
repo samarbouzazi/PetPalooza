@@ -84,5 +84,10 @@ public class AnimalController {
     public RatingAnimal likeUserToAnimal(@PathVariable long idAnimal,@PathVariable long idUser){
         return this.animalService.likeUserToAnimal(idAnimal,idUser);
     }
+
+    @GetMapping("/interested/{idAnimal}/{idUser}")
+    public Animal interestedAnimal(@PathVariable long idAnimal,@PathVariable long idUser){
+        return this.animalService.setInterested(idAnimal,idUser);
+    }
 }
 
