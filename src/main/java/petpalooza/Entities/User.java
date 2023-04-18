@@ -6,10 +6,7 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 
@@ -100,6 +97,8 @@ public class User implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="userOffer")
     private List<JobOffer> jobOfferss;
+    @ElementCollection
+    private List<String> interests = new ArrayList<>(); // ajout de la liste des intérêts
 
     /////////Iskander/////////////
     @OneToMany
