@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -11,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import petpalooza.Entities.Email;
 import petpalooza.Entities.Event;
+import petpalooza.Entities.TypeEvent;
 import petpalooza.Entities.User;
 import petpalooza.Repositories.UserRepository;
 import petpalooza.Services.IEmailService;
@@ -18,6 +20,7 @@ import petpalooza.Services.IEvent;
 import petpalooza.Services.userServices.IUser;
 
 import javax.websocket.server.PathParam;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -31,6 +34,9 @@ public class EventController {
     IEvent iEvent;
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    private final IEmailService emailService;
 
 
 
@@ -76,7 +82,7 @@ public class EventController {
         return iEvent.getEventsByParticipants();
     }
 
-    private final IEmailService emailService;
+
 
     // Sending a simple Email
     @PostMapping("/sendMail")
@@ -90,6 +96,26 @@ public class EventController {
     public String sendMailWithAttachment(@RequestBody Email details) {
         String status = emailService.sendMailWithAttachment(details);
         return status;
+    }
+
+    @GetMapping("/search")
+    public List<Event> findByAnyParam(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) TypeEvent typeEvent,
+            @RequestParam(required = false) String location,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date datedebut,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date datefin,
+            @RequestParam(required = false) Integer maxpart
+    ){
+        return iEvent.findAllsearch(
+                title,  location,  description,  datedebut,  datefin,  maxpart,  typeEvent
+        );
+    }
+
+    @GetMapping("/findstream")
+    public List<Event> search(@RequestParam  String s){
+        return iEvent.search(s);
     }
 
 
