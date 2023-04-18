@@ -43,6 +43,16 @@ public class User implements Serializable {
     Date birthDate;
     String address;
 
+    @Column(name = "registration_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    Date registrationDate;
+    @PrePersist
+    protected void onCreate() {
+        if (registrationDate == null) {
+            registrationDate = new Date();
+        }
+    }
+
     int numberOfSignal;
 
 

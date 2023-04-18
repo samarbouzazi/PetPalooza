@@ -2,6 +2,8 @@ package petpalooza.RestControllers.userController;
 
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,8 @@ import petpalooza.Entities.User;
 import petpalooza.Services.userServices.IPaggination;
 import petpalooza.Services.userServices.PagginationService;
 import petpalooza.security.payload.response.MessageResponse;
+import petpalooza.Repositories.UserRepository;
+
 
 import java.util.List;
 
@@ -23,6 +27,8 @@ public class PagginationController {
     IPaggination iPaggination;
 
     PagginationService pagginationService;
+
+    UserRepository userRepository;
 
 
     @GetMapping("/page")
@@ -53,10 +59,23 @@ public class PagginationController {
 
 
 
-//        mav.addObject("currentPage", currentPage);
-//        mav.addObject("totalPages", totalPages);
-//        mav.addObject("totalItems", totalItems);
-//        mav.addObject("role", role);
 
+    }
+
+
+
+    @GetMapping("pageSorted/{pageNumber}")
+    public List<User> getOnePageSortedByRegistrationDate(@PathVariable("pageNumber") int currentPage) {
+        PageRequest pageRequest = PageRequest.of(currentPage - 1, 5, Sort.by("registrationDate").descending());
+        Page<User> page = userRepository.findAll(pageRequest);
+        int totalPages = page.getTotalPages();
+        long totalItems = page.getTotalElements();
+        List<User> users = page.getContent();
+
+        System.out.println("\n  \"the total number of pages " + totalPages +
+                "//               \"\\n  and the TotalItems is  "  + totalItems +
+                "\n and the content of this page is  " + users);
+
+        return users;
     }
 }

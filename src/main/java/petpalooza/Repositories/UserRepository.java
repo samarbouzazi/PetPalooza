@@ -1,11 +1,14 @@
 package petpalooza.Repositories;
 
+import net.bytebuddy.TypeCache;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 import petpalooza.Entities.ERole;
 import petpalooza.Entities.Role;
 import petpalooza.Entities.User;
+import org.springframework.data.domain.Sort;
 
 import javax.jws.soap.SOAPBinding;
 import java.awt.print.Pageable;
@@ -33,8 +36,9 @@ public interface UserRepository extends JpaRepository<User,Long>, PagingAndSorti
 
    ///////////
 
-    //List<User> findAll(Pageable pageable);
-
+    ///List<User> findAll(Pageable pageablen  );
+   /// Page<User> findAll(Pageable pageable, Sort sort);
+    //Page<User> findAll(Pageable pageable);
 //    List<User> findByRoleName(ERole name);
 
 
