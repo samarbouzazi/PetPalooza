@@ -55,7 +55,7 @@ public class User implements Serializable {
     @JoinTable(  name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @JsonIgnore
+//    @JsonIgnore
     private Set<Role> roles = new HashSet<>();
     @PreRemove
     public void removeRoles() {
