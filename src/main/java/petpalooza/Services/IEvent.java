@@ -1,5 +1,6 @@
 package petpalooza.Services;
 
+import org.apache.tomcat.util.http.parser.Authorization;
 import petpalooza.Entities.Event;
 
 import java.util.List;

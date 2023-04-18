@@ -1,7 +1,10 @@
 package petpalooza.Services;
 
 import lombok.Data;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import petpalooza.Entities.Event;
 import petpalooza.Entities.User;
@@ -35,6 +38,7 @@ public class EventService implements IEvent {
 
     @Override
     public Event addeEvent(Event event) {
+
         return eventRepository.save(event);
     }
 
