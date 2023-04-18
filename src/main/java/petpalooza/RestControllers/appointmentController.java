@@ -6,7 +6,7 @@ import petpalooza.Entities.Appointment;
 import petpalooza.Entities.Event;
 import petpalooza.Entities.User;
 import petpalooza.Services.IAppointment;
-import petpalooza.Services.IUser;
+import petpalooza.Services.userServices.IUser;
 
 import java.util.List;
 

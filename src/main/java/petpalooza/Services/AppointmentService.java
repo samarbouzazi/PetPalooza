@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import petpalooza.Entities.Appointment;
 import petpalooza.Entities.User;
 import petpalooza.Repositories.AppointmentRepository;
+import petpalooza.Services.userServices.IUser;
 
 import java.util.List;
 @Service

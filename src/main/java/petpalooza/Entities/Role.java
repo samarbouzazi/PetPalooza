@@ -19,7 +19,12 @@ public class Role implements Serializable {
     Long idRole;
     @Enumerated(EnumType.STRING)
     ERole roleName;
+    //////////////////////////////
 
+
+    public Role(ERole roleName) {
+        this.roleName = roleName;
+    }
 }
 
 
