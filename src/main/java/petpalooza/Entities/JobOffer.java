@@ -1,40 +1,36 @@
 package petpalooza.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
+
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Entity
-
 @Table(name = "JobOffer")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 
 public class JobOffer implements Serializable  {
 
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     Long idJob;
     float price;
+    @Temporal (TemporalType.DATE)
     Date beginnigDate;
+    @Temporal (TemporalType.DATE)
     Date endDate;
     String title;
     String description;
 
 
   @ManyToOne
+  @JsonIgnore
   User userOffer;
-
 }
