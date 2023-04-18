@@ -9,6 +9,7 @@ import petpalooza.Repositories.EventRepository;
 import petpalooza.Repositories.UserRepository;
 import petpalooza.Services.userServices.IUser;
 
+import javax.validation.constraints.Null;
 import java.util.List;
 import java.util.Set;
 
