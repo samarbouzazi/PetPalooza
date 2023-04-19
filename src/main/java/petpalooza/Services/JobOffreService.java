@@ -137,6 +137,11 @@ public class JobOffreService implements IJobOffre {
     public List<JobOffer> search(float price) {
         return jobOffreRepository.searchByPrice(price) ;
     }
+    @Override
+    public List<JobOffer> filterByOffretype(String offretype) {
+        return this.jobOffreRepository.filterByOffreType(offretype);
+    }
+
 
 
 }
