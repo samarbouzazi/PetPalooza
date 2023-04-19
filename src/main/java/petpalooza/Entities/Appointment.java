@@ -1,6 +1,6 @@
 package petpalooza.Entities;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
@@ -20,21 +20,29 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Appointment implements Serializable  {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long idAppointment;
-    Date dateRDV;
+public class Appointment implements Serializable {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long idAppointment;
 
+	Date dateRDV;
 
+	double price;
 
-    /// idVter
-   @ManyToOne
-    User userViternaire;
+	String metting;
+	
+	double lat;
+	
+	double lng;
 
-    @ManyToOne
-    User normalUser;
+	/// idVter
+	@ManyToOne
+	//@JsonIgnore
+	User userViternaire;
 
-
+	@ManyToOne
+	//@JsonIgnore
+	User normalUser;
 
 }
