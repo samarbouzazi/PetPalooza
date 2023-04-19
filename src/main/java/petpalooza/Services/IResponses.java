@@ -11,6 +11,7 @@ import petpalooza.Entities.Questions;
 import petpalooza.Entities.Responses;
 
 public interface IResponses {
+//////functions///
 	List<Responses> findAll();
 	Responses updateResponse(Responses response);
 	public ResponseEntity<String> addResponse(HttpServletRequest request,  Responses response);

@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Questions implements Serializable {
-
+//////////columns/////
 	 @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private long id;
