@@ -1,16 +1,25 @@
 package petpalooza.Services;
 
 import lombok.Data;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import petpalooza.DTO.CountType;
 import petpalooza.Entities.Event;
+import petpalooza.Entities.TypeEvent;
 import petpalooza.Entities.User;
 import petpalooza.Repositories.EventRepository;
 import petpalooza.Repositories.UserRepository;
 import petpalooza.Services.userServices.IUser;
 
+import javax.validation.constraints.Null;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Data
@@ -20,6 +29,7 @@ public class EventService implements IEvent {
     EventRepository eventRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
     IUser iUser;
 
     @Override
@@ -34,6 +44,7 @@ public class EventService implements IEvent {
 
     @Override
     public Event addeEvent(Event event) {
+
         return eventRepository.save(event);
     }
 
@@ -88,7 +99,89 @@ public class EventService implements IEvent {
 
     @Override
     public List<Event> getEventsByParticipants() {
-        return eventRepository.findAllByOrderByParticipantsDesc();
+        return eventRepository.eventsorted();
     }
+
+
+    //////stat//////////
+    @Override
+    public List<CountType> statistique()
+    {
+        return this.eventRepository.statistque();
+    }
+
+
+    @Override
+    public List<Event> findAllsearch(
+            String title, String location, String description, Date datedebut, Date datefin, Integer maxpart,TypeEvent typeEvent
+    ) {
+        return eventRepository.searchEventsByTitreOrLocationOrDescriptionOrDateDebutOrDateFinOrMaxParticipantsOrType(
+                title,  typeEvent,  description, location,  datedebut,  datefin,  maxpart
+        );
+    }
+
+    @Override
+    public List<Event> search(String s, Date startDate, Date endDate, Integer maxParticipants) {
+        return eventRepository.findAll().stream()
+                .filter(event -> event.getTitre() != null || event.getTitre().equals(s))
+                .filter(event -> event.getDescription() != null || event.getDescription().contains(s))
+                .filter(event -> event.getLocation() != null || event.getLocation().contains(s))
+                .filter(event -> event.getDateDebut() == null || event.getDateDebut().after(startDate))
+                .filter(event -> event.getDateFin() == null || event.getDateFin().before(endDate))
+                .filter(event -> event.getMaxParticipants() == null || event.getMaxParticipants() == maxParticipants)
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public List<Event> searchh(String s) {
+//        Stream<Event> stream = eventRepository.findAll().stream();
+//        List<Event> collect = stream.filter(e -> e.getTitre().equals(s)).collect(Collectors.toList());
+//        collect.forEach(System.out::println);
+        return eventRepository.findAll().stream().filter(event -> event.getTitre()!=null )
+                .filter(event -> event.getTitre().equals(s)  ).collect(Collectors.toList());
+        //return eventRepository.findAll();
+        //eventRepository.findAll().stream().filter(event -> event.getTitre().equals("Don VacPets")).forEach(System.out::println);
+
+
+    }
+
+
+//    public List<Event> search(String s) {
+//
+//        return eventRepository.findAll().stream().filter(event -> event.getTitre()!=null
+//                        || event.getDescription()!=null
+//                        || event.getLocation()!=null
+//                        || event.getType()!=null)
+//                .filter(event -> event.getTitre().equals(s)
+//                        || event.getType().equals(s)
+//                        || event.getDescription().equals(s)
+//                        || event.getLocation().equals(s)
+//                ).collect(Collectors.toList());
+//        //        Stream<Event> stream = eventRepository.findAll().stream();
+//        //        List<Event> collect = stream.filter(e -> e.getTitre().equals(s)).collect(Collectors.toList());
+//        //        collect.forEach(System.out::println);
+//       //eventRepository.findAll().stream().filter(event -> event.getTitre().equals("Don VacPets")).forEach(System.out::println);
+//
+//
+//    }
+
+
+//    searchUsers() {
+//        if (this.searchTerm) {
+//            console.log(this.searchTerm);
+//            this.filteredUsers = this.users.filter((user) => {
+//            return Object.values(user).some((value) => {
+//            if (typeof value === 'string' && value.includes('+')) {
+//                value = value.replace(/\D/g, ''); // remove all non-digit characters
+//                if (value.toString().includes(this.searchTerm.toString())) {
+//                    return true;
+//                }
+//            } else if (typeof value === 'string' |
+//                    onInputChange(event: any) {
+//                this.searchTerm = event.target.value;
+//                this.searchUsers();
+//            }
+
 
 }
