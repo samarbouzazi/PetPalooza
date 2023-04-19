@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-
 @Table(name = "Animal")
 @Getter
 @Setter
@@ -39,4 +38,9 @@ public class Animal implements Serializable  {
     @OneToMany(mappedBy = "animal")
     @JsonIgnore
     List<RatingAnimal> ratings;
+
+    @ManyToMany(mappedBy = "interestedAnimals")
+    @JsonIgnore
+    List<User> interestedUsers;
+
 }
