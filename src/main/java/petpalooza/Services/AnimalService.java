@@ -1,6 +1,9 @@
 package petpalooza.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import petpalooza.Entities.Animal;
 import petpalooza.Entities.RatingAnimal;
@@ -104,6 +107,13 @@ public class AnimalService implements IAnimal{
         return animalRepository.save(animal);
 
     }
+
+   @Override
+    public Page<Animal> findPage(int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber - 1,6);
+        return animalRepository.findAll(pageable);
+    }
+
 
 
 }

@@ -1,5 +1,6 @@
 package petpalooza.Services;
 
+import org.springframework.data.domain.Page;
 import petpalooza.Entities.Animal;
 import petpalooza.Entities.RatingAnimal;
 
@@ -20,6 +21,6 @@ public interface IAnimal {
     public RatingAnimal likeUserToAnimal(long idAnimal, long idUser);
     public RatingAnimal rate(RatingAnimal ratingAnimal);
     public Animal setInterested(long idAnimal, long idUser);
-
+    public Page<Animal> findPage(int pageNumber);
 
 }
