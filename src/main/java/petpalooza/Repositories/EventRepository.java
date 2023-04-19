@@ -11,6 +11,9 @@ import java.util.Date;
 import java.util.List;
 
 public interface EventRepository extends JpaRepository<Event,Long> {
+
+    List<Event> findAllByOrderByParticipantsDesc();
+
     //List<Event> findAllByOrderByParticipantsDesc();
     List<Event> findAllByTitreOrLocationOrDescriptionOrDateDebutOrDateFinOrMaxParticipantsOrType(
             String title, String location, String description, Date datedebut, Date datefin, Integer maxpart, TypeEvent typeEvent
@@ -25,7 +28,9 @@ public interface EventRepository extends JpaRepository<Event,Long> {
     List<Event> eventsorted();
 
 
+
     @Query(value ="select new petpalooza.DTO.CountType(COUNT(*),type) from Event GROUP BY type")
     public List<CountType> statistque();
+
 
 }
