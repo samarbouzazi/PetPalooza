@@ -5,17 +5,17 @@ import org.springframework.stereotype.Service;
 import petpalooza.Entities.JobOffer;
 import petpalooza.Entities.User;
 import petpalooza.Repositories.JobOffreRepository;
+import petpalooza.Services.userServices.UserService;
 
 import java.util.*;
 
 @Service
 @AllArgsConstructor
-
 public class JobOffreService implements IJobOffre {
 
 
     JobOffreRepository  jobOffreRepository;
-    EmailSender emailSender;
+    IEmailService emailSender;
     UserService userService;
     @Override
     public List<JobOffer> findAllByPrice() {

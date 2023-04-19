@@ -51,7 +51,7 @@ public class JobOffreController {
     public String  getJobOffreStat() {
         return iJobOffre.JobOffreStat();
     }
-   @GetMapping("/getbyprice/{price}")
+    @GetMapping("/getbyprice/{price}")
     public List<JobOffer>  getbyprice(@PathVariable float price)
     {
         return iJobOffre.search(price);
@@ -65,6 +65,5 @@ public class JobOffreController {
 
         return iJobOffre.filterByOffretype(offretype);
     }
-
 
 }

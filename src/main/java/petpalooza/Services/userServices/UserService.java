@@ -2,12 +2,14 @@ package petpalooza.Services.userServices;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import petpalooza.Entities.Event;
 import petpalooza.Entities.User;
 import petpalooza.Repositories.UserRepository;
+import petpalooza.security.payload.response.MessageResponse;
 
 import java.util.List;
 import java.util.Optional;
@@ -103,7 +105,7 @@ public class UserService implements IUser{
 
 
     @Override
-    public void SignalerUser(Long idUser) {
+    public ResponseEntity<?> SignalerUser(Long idUser) {
 
         User user=new User();
         user= findUserByID(idUser);
@@ -112,6 +114,7 @@ public class UserService implements IUser{
         if(i ==5){
             Block(idUser);
             System.out.println("User blocked succusfuly\n -----");
+            return ResponseEntity.ok(new MessageResponse("user blocked succusfuly after 5 signal"));
         }else {
             int newValue=i+1;
             user.setNumberOfSignal(newValue);
@@ -119,11 +122,11 @@ public class UserService implements IUser{
             userRepository.save(user);
 
             System.out.println(" and know the number of Signal  after saving  " + i);
+            return ResponseEntity.ok(new MessageResponse("and now the number of Signal  after saving is  " +i));
+
 
         }
     }
 
 
 }
-
-

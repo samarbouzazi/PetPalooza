@@ -9,12 +9,13 @@ import java.io.Serializable;
 import java.util.*;
 
 @Entity
-
 @Table(name = "User")
 @Getter
 @Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
+//@ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User implements Serializable {
 
@@ -39,6 +40,16 @@ public class User implements Serializable {
     Date birthDate;
     String address;
 
+    @Column(name = "registration_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    Date registrationDate;
+    @PrePersist
+    protected void onCreate() {
+        if (registrationDate == null) {
+            registrationDate = new Date();
+        }
+    }
+
     int numberOfSignal;
 
 
@@ -52,7 +63,7 @@ public class User implements Serializable {
     @JoinTable(  name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @JsonIgnore
+//    @JsonIgnore
     private Set<Role> roles = new HashSet<>();
     @PreRemove
     public void removeRoles() {
@@ -68,9 +79,18 @@ public class User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "idMessage"))
     Set<ChatMessage> chatMessageSet= new HashSet<>();
 
+//////profile_relation//////
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private Profile profile;
 
-
-
+  
+  @OneToMany(mappedBy = "user")
+  private List<Responses> responses;
+  
+  @OneToMany(mappedBy = "user")
+  private List<Questions> questions;
+  
+  
     ///////////////////////Event Samar/////////////
     @OneToMany(mappedBy = "owner",cascade = CascadeType.ALL)
     List<Event> events;
@@ -84,6 +104,7 @@ public class User implements Serializable {
    //////////////////Islem/////////////////
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="userAnimal")
+    @JsonIgnore
     private Set<Animal> animals;
     @OneToMany(mappedBy = "user")
     @JsonIgnore
@@ -103,7 +124,7 @@ public class User implements Serializable {
     /////////Iskander/////////////
     @OneToMany
     List<Appointment> appointments;
-
+ 
 
 
 
@@ -147,7 +168,6 @@ public class User implements Serializable {
         this.active = active;
     }
 
-
     public int getNumberOfSignal() {
         return numberOfSignal;
     }
@@ -155,6 +175,7 @@ public class User implements Serializable {
     public void setNumberOfSignal(int numberOfSignal) {
         this.numberOfSignal = numberOfSignal;
     }
+
 }
 
 

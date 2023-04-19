@@ -14,14 +14,14 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+//@ToString
 public class Event implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long numEvent;
 
-    private String Titre;
+    private String titre;
 
     @Enumerated(EnumType.STRING)
     private TypeEvent type;
@@ -30,7 +30,7 @@ public class Event implements Serializable {
 
     private String location;
 
-    private Integer MaxParticipants;
+    private Integer maxParticipants;
 
     @Temporal (TemporalType.DATE)
     private Date dateDebut;

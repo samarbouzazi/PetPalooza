@@ -61,9 +61,12 @@ public class UserController {
 
 
 @PutMapping("signalUser/{idUser}")
-    public void ReportAUser(@PathVariable("idUser") Long idUser)
+    public ResponseEntity<?> ReportAUser(@PathVariable("idUser") Long idUser)
 {
-    iUser.SignalerUser(idUser);
+return     iUser.SignalerUser(idUser);
+//    User user=   iUser.findUserByID(idUser);
+//
+//    return ResponseEntity.ok(new MessageResponse( user.getUsername() +"is  signaler " +" the total number of signal is "+ user.getNumberOfSignal()) );
 }
 
 }

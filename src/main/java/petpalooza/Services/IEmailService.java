@@ -9,4 +9,6 @@ public interface IEmailService {
 
 
     String sendMailWithAttachment(Email details);
+
+    void send(String to, String email);
 }
