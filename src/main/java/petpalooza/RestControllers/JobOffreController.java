@@ -3,6 +3,7 @@ package petpalooza.RestControllers;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.web.bind.annotation.*;
+import petpalooza.Entities.Animal;
 import petpalooza.Entities.JobOffer;
 import petpalooza.Repositories.JobOffreRepository;
 import petpalooza.Services.IJobOffre;
@@ -58,6 +59,11 @@ public class JobOffreController {
     @GetMapping("/tri")
     public  List<JobOffer> tri(){
         return iJobOffre.findAllByPrice();
+    }
+    @GetMapping("/filter/{offretype}")
+    public List<JobOffer> filterByOffretpe(@PathVariable String offretype ){
+
+        return iJobOffre.filterByOffretype(offretype);
     }
 
 }
