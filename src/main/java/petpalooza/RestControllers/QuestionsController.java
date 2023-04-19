@@ -44,7 +44,7 @@ public class QuestionsController {
 	public Questions updateQuestion( @RequestBody Questions question) {
      return iquestions.updateQuestion(question);
  }
-
+///////////add////
  @PostMapping("/addquestion")
  public ResponseEntity<String> addQuestion(HttpServletRequest request,  Questions question) {
      return iquestions.addQuestion( request,   question);

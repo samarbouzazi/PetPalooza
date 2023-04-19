@@ -36,7 +36,7 @@ public class ResponsesController {
 	 public List<Responses> findAll() {
 	        return iresponses.findAll();
 	    }
-
+//////update ////
 	   @PutMapping("/updateresponse/{id}")
 	    public Responses updateResponse(@RequestBody Responses response) {
 	        return iresponses.updateResponse(response);

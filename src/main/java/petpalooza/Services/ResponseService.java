@@ -25,12 +25,12 @@ public class ResponseService implements IResponses {
 	  @Autowired
 	  ResponsesRepository responsesRepository ;
 	  
-	
+	//////getall///
 	    public List<Responses> findAll() {
 	        return responsesRepository.findAll();
 	    }
 
-	   
+	   //////update////
 	    public Responses updateResponse(Responses response) {
 	        return responsesRepository.save(response);
 	    }
@@ -38,7 +38,7 @@ public class ResponseService implements IResponses {
 	    
 	 
 	    
-	    
+////////add/////	    
 	    public ResponseEntity<String> addResponse(HttpServletRequest request,  Responses response) {
 	        String userInput = response.getResponse_desription();
 	        if (containsBadWord(userInput)) {
