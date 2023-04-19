@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @CrossOrigin
 @Data
-
 public class JobOffreController {
 
     IJobOffre iJobOffre;

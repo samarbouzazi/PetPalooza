@@ -30,7 +30,7 @@ public class UserService implements IUser{
     @Override
     public User addNewUser(User user) {
         String name=user.getUsername();
-        if((userRepository.existsByUsername(name)) ==true){
+        if((userRepository.existsByUsername(name))){
             System.out.println("user exist ");
         }
 

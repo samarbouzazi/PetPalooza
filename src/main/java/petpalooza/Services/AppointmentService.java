@@ -1,12 +1,16 @@
 package petpalooza.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
+
+import lombok.AllArgsConstructor;
 import petpalooza.Entities.Appointment;
 import petpalooza.Entities.User;
 import petpalooza.Repositories.AppointmentRepository;
 
 import java.util.List;
+@AllArgsConstructor
 @Service
 public class AppointmentService implements IAppointment{
 
