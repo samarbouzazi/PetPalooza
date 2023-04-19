@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import petpalooza.DTO.CountType;
 import petpalooza.Entities.Event;
 import petpalooza.Entities.TypeEvent;
 import petpalooza.Entities.User;
@@ -101,6 +102,15 @@ public class EventService implements IEvent {
         return eventRepository.eventsorted();
     }
 
+
+    //////stat//////////
+    @Override
+    public List<CountType> statistique()
+    {
+        return this.eventRepository.statistque();
+    }
+
+
     @Override
     public List<Event> findAllsearch(
             String title, String location, String description, Date datedebut, Date datefin, Integer maxpart,TypeEvent typeEvent
@@ -111,16 +121,50 @@ public class EventService implements IEvent {
     }
 
     @Override
-    public List<Event> search(String s) {
+    public List<Event> search(String s, Date startDate, Date endDate, Integer maxParticipants) {
+        return eventRepository.findAll().stream()
+                .filter(event -> event.getTitre() != null || event.getTitre().equals(s))
+                .filter(event -> event.getDescription() != null || event.getDescription().contains(s))
+                .filter(event -> event.getLocation() != null || event.getLocation().contains(s))
+                .filter(event -> event.getDateDebut() == null || event.getDateDebut().after(startDate))
+                .filter(event -> event.getDateFin() == null || event.getDateFin().before(endDate))
+                .filter(event -> event.getMaxParticipants() == null || event.getMaxParticipants() == maxParticipants)
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public List<Event> searchh(String s) {
 //        Stream<Event> stream = eventRepository.findAll().stream();
 //        List<Event> collect = stream.filter(e -> e.getTitre().equals(s)).collect(Collectors.toList());
 //        collect.forEach(System.out::println);
-        return eventRepository.findAll().stream().filter(event -> event.getTitre()!=null ).filter(event -> event.getTitre().equals(s)  ).collect(Collectors.toList());
-       //return eventRepository.findAll();
-       //eventRepository.findAll().stream().filter(event -> event.getTitre().equals("Don VacPets")).forEach(System.out::println);
+        return eventRepository.findAll().stream().filter(event -> event.getTitre()!=null )
+                .filter(event -> event.getTitre().equals(s)  ).collect(Collectors.toList());
+        //return eventRepository.findAll();
+        //eventRepository.findAll().stream().filter(event -> event.getTitre().equals("Don VacPets")).forEach(System.out::println);
 
 
     }
+
+
+//    public List<Event> search(String s) {
+//
+//        return eventRepository.findAll().stream().filter(event -> event.getTitre()!=null
+//                        || event.getDescription()!=null
+//                        || event.getLocation()!=null
+//                        || event.getType()!=null)
+//                .filter(event -> event.getTitre().equals(s)
+//                        || event.getType().equals(s)
+//                        || event.getDescription().equals(s)
+//                        || event.getLocation().equals(s)
+//                ).collect(Collectors.toList());
+//        //        Stream<Event> stream = eventRepository.findAll().stream();
+//        //        List<Event> collect = stream.filter(e -> e.getTitre().equals(s)).collect(Collectors.toList());
+//        //        collect.forEach(System.out::println);
+//       //eventRepository.findAll().stream().filter(event -> event.getTitre().equals("Don VacPets")).forEach(System.out::println);
+//
+//
+//    }
 
 
 //    searchUsers() {

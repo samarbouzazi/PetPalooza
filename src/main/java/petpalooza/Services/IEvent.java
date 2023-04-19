@@ -1,6 +1,7 @@
 package petpalooza.Services;
 
 import org.apache.tomcat.util.http.parser.Authorization;
+import petpalooza.DTO.CountType;
 import petpalooza.Entities.Event;
 import petpalooza.Entities.TypeEvent;
 import petpalooza.Entities.User;
@@ -24,8 +25,17 @@ public interface IEvent {
     );
 
     public List<Event> search (
+            String s, Date startDate, Date endDate, Integer maxParticipants
+    );
+
+    public List<Event> searchh (
             String s
     );
+
+
+    public List<CountType> statistique();
+
+
 
 
 }

@@ -2,6 +2,7 @@ package petpalooza.Repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import petpalooza.DTO.CountType;
 import petpalooza.Entities.Event;
 import petpalooza.Entities.TypeEvent;
 import petpalooza.Entities.User;
@@ -25,6 +26,11 @@ public interface EventRepository extends JpaRepository<Event,Long> {
 
     @Query("select e from Event e left join e.participants p group by e order by count(p) desc")
     List<Event> eventsorted();
+
+
+
+    @Query(value ="select new petpalooza.DTO.CountType(COUNT(*),type) from Event GROUP BY type")
+    public List<CountType> statistque();
 
 
 }
