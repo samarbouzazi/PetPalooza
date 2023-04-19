@@ -6,16 +6,13 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
-
 @Table(name = "User")
 @Getter
 @Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -71,9 +68,18 @@ public class User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "idMessage"))
     Set<ChatMessage> chatMessageSet= new HashSet<>();
 
+//////profile_relation//////
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private Profile profile;
 
-
-
+  
+  @OneToMany(mappedBy = "user")
+  private List<Responses> responses;
+  
+  @OneToMany(mappedBy = "user")
+  private List<Questions> questions;
+  
+  
     ///////////////////////Event Samar/////////////
     @OneToMany(mappedBy = "owner",cascade = CascadeType.ALL)
     List<Event> events;
@@ -87,6 +93,7 @@ public class User implements Serializable {
    //////////////////Islem/////////////////
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="userAnimal")
+    @JsonIgnore
     private Set<Animal> animals;
     @OneToMany(mappedBy = "user")
     @JsonIgnore
@@ -100,11 +107,13 @@ public class User implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="userOffer")
     private List<JobOffer> jobOfferss;
+    @ElementCollection
+    private List<String> interests = new ArrayList<>(); // ajout de la liste des intérêts
 
     /////////Iskander/////////////
     @OneToMany
     List<Appointment> appointments;
-
+ 
 
 
 
@@ -148,7 +157,6 @@ public class User implements Serializable {
         this.active = active;
     }
 
-
     public int getNumberOfSignal() {
         return numberOfSignal;
     }
@@ -156,6 +164,7 @@ public class User implements Serializable {
     public void setNumberOfSignal(int numberOfSignal) {
         this.numberOfSignal = numberOfSignal;
     }
+
 }
 
 

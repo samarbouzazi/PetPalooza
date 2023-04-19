@@ -13,6 +13,7 @@ import petpalooza.Services.AppointmentService;
 import petpalooza.Services.IAppointment;
 
 import petpalooza.Services.userServices.IUser;
+import petpalooza.Services.userServices.UserService;
 
 import java.io.IOException;
 import java.time.LocalDateTime;

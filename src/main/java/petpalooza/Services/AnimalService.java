@@ -37,7 +37,7 @@ public class AnimalService implements IAnimal{
     @Override
     public List<Animal> getAllAnimals() {
 
-        return this.animalRepository.findAll();
+        return animalRepository.findAll();
 
     }
 

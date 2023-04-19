@@ -10,7 +10,8 @@ import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
-@RequestMapping("animal")
+@RequestMapping("/animal")
+@CrossOrigin
 public class AnimalController {
     @Autowired
     AnimalService animalService;
