@@ -28,6 +28,8 @@ public class JobOffer implements Serializable  {
     Date endDate;
     String title;
     String description;
+    String offretype;
+
 
 
   @ManyToOne

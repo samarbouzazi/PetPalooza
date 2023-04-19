@@ -10,7 +10,8 @@ import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
-@RequestMapping("animal")
+@RequestMapping("/animal")
+@CrossOrigin
 public class AnimalController {
     @Autowired
     AnimalService animalService;
@@ -83,6 +84,11 @@ public class AnimalController {
     @GetMapping("/getrate/{idAnimal}/{idUser}")
     public RatingAnimal likeUserToAnimal(@PathVariable long idAnimal,@PathVariable long idUser){
         return this.animalService.likeUserToAnimal(idAnimal,idUser);
+    }
+
+    @GetMapping("/interested/{idAnimal}/{idUser}")
+    public Animal interestedAnimal(@PathVariable long idAnimal,@PathVariable long idUser){
+        return this.animalService.setInterested(idAnimal,idUser);
     }
 }
 
