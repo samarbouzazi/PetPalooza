@@ -73,6 +73,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
         .authorizeRequests()
             .antMatchers("/public/login","/private/user/public","/animal/**").permitAll()
+
             .antMatchers("/private/user/admin","/admin/**").hasRole("ADMIN")
             .antMatchers("/private/user/mod").hasRole("MANAGER").antMatchers("/private/user/profile").authenticated();
 //    http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/public/logout"));
