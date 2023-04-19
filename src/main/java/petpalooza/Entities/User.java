@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-
 @Table(name = "User")
 @Getter
 @Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -57,9 +57,18 @@ public class User implements Serializable  {
     }
 
 
+//////profile_relation//////
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private Profile profile;
 
-
-
+  
+  @OneToMany(mappedBy = "user")
+  private List<Responses> responses;
+  
+  @OneToMany(mappedBy = "user")
+  private List<Questions> questions;
+  
+  
     ///////////////////////Event Samar/////////////
     @OneToMany(mappedBy = "user")
     List<Event> events;
@@ -78,7 +87,7 @@ public class User implements Serializable  {
     /////////Iskander/////////////
     @OneToMany
     List<Appointment> appointments;
-
+ 
 
 
 
@@ -111,6 +120,7 @@ public class User implements Serializable  {
     public void setActive(int active) {
         this.active = active;
     }
+	
 }
 
 
