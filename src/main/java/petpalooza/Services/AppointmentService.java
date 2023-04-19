@@ -7,6 +7,7 @@ import petpalooza.Entities.User;
 import petpalooza.Repositories.AppointmentRepository;
 import petpalooza.Repositories.UserRepository;
 import petpalooza.Services.userServices.IUser;
+import petpalooza.Services.userServices.UserService;
 
 
 import java.util.List;

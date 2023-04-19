@@ -21,6 +21,7 @@ public class EventService implements IEvent {
     EventRepository eventRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
     IUser iUser;
 
     @Override
