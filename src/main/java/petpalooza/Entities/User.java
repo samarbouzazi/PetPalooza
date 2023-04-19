@@ -18,6 +18,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User implements Serializable {
 
@@ -42,6 +43,16 @@ public class User implements Serializable {
     Date birthDate;
     String address;
 
+    @Column(name = "registration_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    Date registrationDate;
+    @PrePersist
+    protected void onCreate() {
+        if (registrationDate == null) {
+            registrationDate = new Date();
+        }
+    }
+
     int numberOfSignal;
 
 
@@ -55,7 +66,7 @@ public class User implements Serializable {
     @JoinTable(  name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @JsonIgnore
+//    @JsonIgnore
     private Set<Role> roles = new HashSet<>();
     @PreRemove
     public void removeRoles() {
