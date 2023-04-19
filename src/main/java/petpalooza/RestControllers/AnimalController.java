@@ -1,10 +1,13 @@
 package petpalooza.RestControllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import petpalooza.Entities.Animal;
 import petpalooza.Entities.RatingAnimal;
+import petpalooza.Repositories.RatingAnimalRepository;
 import petpalooza.Services.AnimalService;
+import petpalooza.security.payload.response.MessageResponse;
 
 import javax.websocket.server.PathParam;
 import java.util.List;
@@ -15,6 +18,8 @@ import java.util.List;
 public class AnimalController {
     @Autowired
     AnimalService animalService;
+    @Autowired
+    RatingAnimalRepository ratingAnimalRepository;
 
     @GetMapping("/")
     public List<Animal> getAll(){
@@ -89,6 +94,13 @@ public class AnimalController {
     @GetMapping("/interested/{idAnimal}/{idUser}")
     public Animal interestedAnimal(@PathVariable long idAnimal,@PathVariable long idUser){
         return this.animalService.setInterested(idAnimal,idUser);
+    }
+
+    @GetMapping ("/nbrLikesOfAnimal/{idAnimal}")
+    public ResponseEntity<?> getLikes(@PathVariable("idAnimal") long idAnimal){
+        int s = ratingAnimalRepository.nbrLikes(idAnimal);
+        return ResponseEntity.ok(new MessageResponse("\n the number of likes is "+ s + "!!"));
+
     }
 }
 

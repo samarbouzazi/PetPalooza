@@ -15,5 +15,7 @@ public interface RatingAnimalRepository extends JpaRepository<RatingAnimal, Long
     public RatingAnimal likeUserToAnimal (long idAnimal, long idUser);
     @Query("Select r from RatingAnimal r where r.liked = false and r.animal.idAnimal=?1")
     public List<RatingAnimal> dislikesAnimal(long idAnimal);
+    @Query("select COUNT(*) from RatingAnimal   WHERE liked=true and animal.idAnimal=?1")
+    public int nbrLikes(long idAnimal);
 
 }
