@@ -90,5 +90,6 @@ public class AnimalController {
     public Animal interestedAnimal(@PathVariable long idAnimal,@PathVariable long idUser){
         return this.animalService.setInterested(idAnimal,idUser);
     }
+    //hey
 }
 
