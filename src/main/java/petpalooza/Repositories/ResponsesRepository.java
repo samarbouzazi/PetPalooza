@@ -9,7 +9,7 @@ import petpalooza.Entities.Questions;
 import petpalooza.Entities.Responses;
 
 public interface ResponsesRepository extends JpaRepository<Responses,Long>  {
-
+////////functions////
     Long countResponsessByUser(Long id);
     Long countResponsesByquestion(Long id);
     List<Responses> findAllByQuestion(Questions question);

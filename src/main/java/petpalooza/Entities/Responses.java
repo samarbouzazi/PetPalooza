@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Responses implements Serializable{
+//////////columns/////
 
 	 @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)

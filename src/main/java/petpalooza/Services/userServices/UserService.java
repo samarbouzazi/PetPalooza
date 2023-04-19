@@ -32,7 +32,7 @@ public class UserService implements IUser{
     @Override
     public User addNewUser(User user) {
         String name=user.getUsername();
-        if((userRepository.existsByUsername(name))){
+        if((userRepository.existsByUsername(name)) ==true){
             System.out.println("user exist ");
         }
 
@@ -125,5 +125,3 @@ public class UserService implements IUser{
 
 
 }
-
-

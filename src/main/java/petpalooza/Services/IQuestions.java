@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import petpalooza.Entities.Questions;
 
 public interface IQuestions {
+	//////functions///
 	List<Questions> findAll();
 	Questions findQuestionById(Long id);
 	ResponseEntity<String> addQuestion(HttpServletRequest request, Questions question);
