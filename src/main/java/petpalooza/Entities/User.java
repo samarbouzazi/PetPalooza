@@ -9,10 +9,10 @@ import java.io.Serializable;
 import java.util.*;
 
 @Entity
-
 @Table(name = "User")
 @Getter
 @Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -68,9 +68,18 @@ public class User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "idMessage"))
     Set<ChatMessage> chatMessageSet= new HashSet<>();
 
+//////profile_relation//////
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private Profile profile;
 
-
-
+  
+  @OneToMany(mappedBy = "user")
+  private List<Responses> responses;
+  
+  @OneToMany(mappedBy = "user")
+  private List<Questions> questions;
+  
+  
     ///////////////////////Event Samar/////////////
     @OneToMany(mappedBy = "owner",cascade = CascadeType.ALL)
     List<Event> events;
@@ -104,7 +113,7 @@ public class User implements Serializable {
     /////////Iskander/////////////
     @OneToMany
     List<Appointment> appointments;
-
+ 
 
 
 
@@ -148,7 +157,6 @@ public class User implements Serializable {
         this.active = active;
     }
 
-
     public int getNumberOfSignal() {
         return numberOfSignal;
     }
@@ -156,6 +164,7 @@ public class User implements Serializable {
     public void setNumberOfSignal(int numberOfSignal) {
         this.numberOfSignal = numberOfSignal;
     }
+
 }
 
 
