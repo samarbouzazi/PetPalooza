@@ -22,5 +22,6 @@ public interface IAnimal {
     public RatingAnimal rate(RatingAnimal ratingAnimal);
     public Animal setInterested(long idAnimal, long idUser);
     public Page<Animal> findPage(int pageNumber);
+    public List<Object[]> getAnimalRaceStats();
 
 }

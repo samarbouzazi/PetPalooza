@@ -114,6 +114,15 @@ public class AnimalService implements IAnimal{
         return animalRepository.findAll(pageable);
     }
 
+    @Override
+    public List<Object[]> getAnimalRaceStats() {
+        List<Object[]> results = animalRepository.getAnimalRaceStats();
+        return results;
+    }
+    public List<Object[]> getAnimalGenderStats() {
+        List<Object[]> results = animalRepository.getAnimalGenderStats();
+        return results;
+    }
 
 
 }
