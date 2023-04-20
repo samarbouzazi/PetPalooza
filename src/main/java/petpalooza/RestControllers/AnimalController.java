@@ -8,11 +8,13 @@ import org.springframework.web.servlet.ModelAndView;
 import petpalooza.Entities.Animal;
 import petpalooza.Entities.RatingAnimal;
 import petpalooza.Entities.User;
+import petpalooza.Repositories.AnimalRepository;
 import petpalooza.Repositories.RatingAnimalRepository;
 import petpalooza.Services.AnimalService;
 import petpalooza.security.payload.response.MessageResponse;
 
 import javax.websocket.server.PathParam;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -23,6 +25,8 @@ public class AnimalController {
     AnimalService animalService;
     @Autowired
     RatingAnimalRepository ratingAnimalRepository;
+    @Autowired
+    AnimalRepository animalRepository;
 
     @GetMapping("/")
     public List<Animal> getAll(){
@@ -126,5 +130,30 @@ public class AnimalController {
         return animals;
 
     }
+   /* @GetMapping("/animals/sorted-by-likes")
+    public ResponseEntity<?> getAnimalsSortedByLikes() {
+        List<Animal> animals = animalRepository.findAll();
+        animals.sort(Comparator.comparingInt(Animal::getL).reversed());
+        return ResponseEntity.ok(animals);
+    }*/
+
+    @GetMapping("/animals/sorted-by-likes")
+    public ResponseEntity<?> getAnimalsSortedByLikes() {
+        List<Animal> animals = animalRepository.findAll();
+        animals.forEach(a -> a.setLikes(ratingAnimalRepository.nbrLikes(a.getIdAnimal())));
+        animals.sort(Comparator.comparingInt(Animal::getLikes).reversed());
+        return ResponseEntity.ok(animals);
+    }
+    @GetMapping("/stats/race")
+    public ResponseEntity<List<Object[]>> getAnimalRaceStats() {
+        List<Object[]> results = animalService.getAnimalRaceStats();
+        return ResponseEntity.ok(results);
+    }
+    @GetMapping("/stats/gender")
+    public ResponseEntity<List<Object[]>> getAnimalGenderStats() {
+        List<Object[]> results = animalService.getAnimalGenderStats();
+        return ResponseEntity.ok(results);
+    }
+
 }
 

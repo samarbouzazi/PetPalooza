@@ -20,4 +20,8 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
 
     @Query("Select a from Animal a where a.gender = ?1")
     public List<Animal> getByGender(String genderAnimal);
+    @Query("SELECT a.race, COUNT(a) FROM Animal a GROUP BY a.race")
+    List<Object[]> getAnimalRaceStats();
+    @Query("SELECT a.gender, COUNT(a) FROM Animal a GROUP BY a.gender")
+    List<Object[]> getAnimalGenderStats();
 }

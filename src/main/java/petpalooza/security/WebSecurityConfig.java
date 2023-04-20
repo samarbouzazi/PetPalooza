@@ -64,10 +64,10 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//    return http.csrf().disable().authorizeRequests().anyRequest().permitAll().and().build();
+  return http.csrf().disable().authorizeRequests().anyRequest().permitAll().and().build();
 
 
-
+/*
     http.cors().and().csrf().disable()
         .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
@@ -87,7 +87,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
 
     http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
-    return http.build();
+    return http.build();*/
   }
 }
 

@@ -31,6 +31,11 @@ public class Animal implements Serializable  {
     String description;
     String gender;
     String image;
+    int likes;
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
 
     @ManyToOne
     User userAnimal;
