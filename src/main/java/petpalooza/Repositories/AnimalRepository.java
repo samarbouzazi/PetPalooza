@@ -2,6 +2,7 @@ package petpalooza.Repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import petpalooza.Entities.Animal;
 
@@ -24,4 +25,8 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
     List<Object[]> getAnimalRaceStats();
     @Query("SELECT a.gender, COUNT(a) FROM Animal a GROUP BY a.gender")
     List<Object[]> getAnimalGenderStats();
+
+    @Query("SELECT COUNT(u) FROM Animal a JOIN a.interestedUsers u WHERE a.idAnimal = :idAnimal")
+    int countInterestedUsers(@Param("idAnimal") long idAnimal);
+
 }

@@ -123,6 +123,10 @@ public class AnimalService implements IAnimal{
         List<Object[]> results = animalRepository.getAnimalGenderStats();
         return results;
     }
+    @Override
+    public int countInterestedUsers(long idAnimal) {
+        return animalRepository.countInterestedUsers(idAnimal);
+    }
 
 
 }

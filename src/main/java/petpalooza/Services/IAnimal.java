@@ -23,5 +23,6 @@ public interface IAnimal {
     public Animal setInterested(long idAnimal, long idUser);
     public Page<Animal> findPage(int pageNumber);
     public List<Object[]> getAnimalRaceStats();
+    public int countInterestedUsers(long idAnimal);
 
 }
