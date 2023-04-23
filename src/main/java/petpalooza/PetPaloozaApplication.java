@@ -16,20 +16,4 @@ public class PetPaloozaApplication {
         SpringApplication.run(PetPaloozaApplication.class, args);
 
     }
-//    @Bean
-//    public WebMvcConfigurer corsConfigurer() {
-//        return new WebMvcConfigurer() {
-//            @Override
-//            public void addCorsMappings(CorsRegistry registry) {
-//                registry.addMapping("/**").allowedOrigins("http://localhost:4200").allowedMethods("*")
-//                        .allowCredentials(true)
-//                        .maxAge(3600)
-//
-//                        .exposedHeaders("X-Custom-Header", "Authorization");
-//
-//                        ;
-//            }
-//        };
-//    }
-
 }

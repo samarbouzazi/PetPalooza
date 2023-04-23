@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-
 @Table(name = "Animal")
 @Getter
 @Setter
@@ -28,10 +27,19 @@ public class Animal implements Serializable  {
     Long idAnimal;
     String nameAnimal;
     Date birthDate;
+
     String race;
     String description;
     String gender;
     String image;
+    int likes;
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+    int dislikes;
+    public void setDislikes (int dislikes) {
+        this.dislikes = dislikes;
+    }
 
     @ManyToOne
     User userAnimal;

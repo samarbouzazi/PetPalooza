@@ -1,6 +1,9 @@
 package petpalooza.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import petpalooza.Entities.Animal;
 import petpalooza.Entities.RatingAnimal;
@@ -37,7 +40,7 @@ public class AnimalService implements IAnimal{
     @Override
     public List<Animal> getAllAnimals() {
 
-        return this.animalRepository.findAll();
+        return animalRepository.findAll();
 
     }
 
@@ -103,6 +106,26 @@ public class AnimalService implements IAnimal{
         userRepository.save(user);
         return animalRepository.save(animal);
 
+    }
+
+   @Override
+    public Page<Animal> findPage(int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber - 1,6);
+        return animalRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Object[]> getAnimalRaceStats() {
+        List<Object[]> results = animalRepository.getAnimalRaceStats();
+        return results;
+    }
+    public List<Object[]> getAnimalGenderStats() {
+        List<Object[]> results = animalRepository.getAnimalGenderStats();
+        return results;
+    }
+    @Override
+    public int countInterestedUsers(long idAnimal) {
+        return animalRepository.countInterestedUsers(idAnimal);
     }
 
 
