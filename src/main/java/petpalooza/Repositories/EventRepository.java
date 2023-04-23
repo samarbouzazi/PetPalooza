@@ -33,4 +33,6 @@ public interface EventRepository extends JpaRepository<Event,Long> {
     public List<CountType> statistque();
 
 
+    List<Event> findByDateDebut(Date dateDebut);
+
 }

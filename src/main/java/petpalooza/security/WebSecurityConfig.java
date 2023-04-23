@@ -64,26 +64,18 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    return http.csrf().disable().authorizeRequests().anyRequest().permitAll().and().build();
 
-
-    /////////Give all permissions//////////
-  return http.csrf().disable().authorizeRequests().anyRequest().permitAll().and().build();
-
-
-
-
-  ////////Security///////
-
+//
+//
 //    http.cors().and().csrf().disable()
 //        .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 //        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 //        .authorizeRequests()
+//            .antMatchers("/public/login","/private/user/public","/animal/**").permitAll()
 //
-//            .antMatchers("/public/login","/private/user/public", "/test/user/admin/page/*", "/animal/**").permitAll()
 //            .antMatchers("/private/user/admin","/admin/**").hasRole("ADMIN")
 //            .antMatchers("/private/user/mod").hasRole("MANAGER").antMatchers("/private/user/profile").authenticated();
-//
-//
 ////    http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/public/logout"));
 //  http  .logout().logoutRequestMatcher(new AntPathRequestMatcher("/public/logout"))
 //            .logoutSuccessUrl("/logout.done").deleteCookies("JSESSIONID")
@@ -94,9 +86,6 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
 //    http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 //
 //    return http.build();
-//
-//
-
-  }
+ }
 }
 
