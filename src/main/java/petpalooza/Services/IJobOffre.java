@@ -18,8 +18,10 @@ public interface IJobOffre {
 
     JobOffer recommendJobOffer();
 
-    //*************************** recommendProduct ****************************************//
+    //*************************** recommendjob ****************************************//
     public JobOffer recommendJobOffer(User user);
     public  String JobOffreStat();
     List<JobOffer> search(float price);
+
+    public List<JobOffer> filterByOffretype(String offretype);
 }
