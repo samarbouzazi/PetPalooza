@@ -28,20 +28,19 @@ public class Animal implements Serializable  {
    // @JsonFormat(pattern = "YYYY-MM-DD")
     @Temporal(TemporalType.DATE)
     private Date birthDate;
-
     private String race;
     private String description;
     private String gender;
-    private String image;
+   // private String image;
     private int likes;
-    public void setLikes(int likes) {
-        this.likes = likes;
+    public void setLikes(int likes) {this.likes = likes;
     }
     private int dislikes;
     public void setDislikes (int dislikes) {
         this.dislikes = dislikes;
     }
-
+    @OneToOne
+    ImageAnimal imageAnimal;
     @ManyToOne
     User userAnimal;
 
@@ -52,5 +51,4 @@ public class Animal implements Serializable  {
     @ManyToMany(mappedBy = "interestedAnimals")
     @JsonIgnore
     List<User> interestedUsers;
-
 }

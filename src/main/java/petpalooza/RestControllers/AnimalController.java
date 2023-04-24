@@ -8,25 +8,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import petpalooza.Entities.Animal;
+import petpalooza.Entities.ImageAnimal;
 import petpalooza.Entities.RatingAnimal;
 import petpalooza.Entities.User;
 import petpalooza.Repositories.AnimalRepository;
+import petpalooza.Repositories.ImageAnimalRepository;
 import petpalooza.Repositories.RatingAnimalRepository;
 import petpalooza.Services.AnimalService;
 import petpalooza.security.payload.response.MessageResponse;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.text.DateFormatter;
 import javax.websocket.server.PathParam;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 @RestController
 @RequestMapping("/animal")
 @CrossOrigin
 public class AnimalController {
+    @Autowired
+    ImageAnimalRepository imageAnimalRepository;
     @Autowired
     AnimalService animalService;
     @Autowired
@@ -45,7 +54,27 @@ public class AnimalController {
     }
 
     @PostMapping("/add")
-    public Animal addAnimal(@RequestBody Animal animal){
+    public Animal addAnimal(
+            @RequestParam("nameAnimal")String nameAnimal,
+            @RequestParam("BirthDate")String BirthDate,
+            @RequestParam("race")String race,
+            @RequestParam("description")String description,
+            @RequestParam("gender")String gender,
+            @RequestParam("image")MultipartFile image
+            ) throws IOException, ParseException {
+        ImageAnimal imageAnimal= new ImageAnimal() ;
+        imageAnimal.setContent(image.getBytes());
+        imageAnimal.setName(image.getOriginalFilename());
+
+        Animal animal = new Animal();
+        animal.setNameAnimal(nameAnimal);
+        animal.setBirthDate(new SimpleDateFormat("yyyy-mm-dd").parse(BirthDate));
+        animal.setRace(race);
+        animal.setDescription(description);
+        animal.setGender(gender);
+        animal.setLikes(0);
+        animal.setDislikes(0);
+        animal.setImageAnimal(this.imageAnimalRepository.save(imageAnimal));
         return this.animalService.addAnimal(animal);
     }
 
@@ -207,7 +236,7 @@ public class AnimalController {
             row.createCell(2).setCellValue(animal.getRace());
             row.createCell(3).setCellValue(animal.getDescription());
             row.createCell(4).setCellValue(animal.getGender());
-            row.createCell(5).setCellValue(animal.getImage());
+            //row.createCell(5).setCellValue(animal.getImage());
           //  row.createCell(7).setCellValue(animal.getLikes());
         }
 
