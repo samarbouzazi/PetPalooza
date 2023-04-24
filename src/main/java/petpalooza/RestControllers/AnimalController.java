@@ -110,16 +110,16 @@ public class AnimalController {
     }
     //hey
     @GetMapping ("/nbrLikesOfAnimal/{idAnimal}")
-    public ResponseEntity<?> getLikes(@PathVariable("idAnimal") long idAnimal){
+    public int getLikes(@PathVariable("idAnimal") long idAnimal){
         int s = ratingAnimalRepository.nbrLikes(idAnimal);
-        return ResponseEntity.ok(new MessageResponse("\n the number of likes is "+ s + "!!"));
+      return  s;
 
     }
 
     @GetMapping ("/nbrDisLikesOfAnimal/{idAnimal}")
-    public ResponseEntity<?> getDisLikes(@PathVariable("idAnimal") long idAnimal){
+    public int getDisLikes(@PathVariable("idAnimal") long idAnimal){
         int i = ratingAnimalRepository.nbrDisLikes(idAnimal);
-        return ResponseEntity.ok(new MessageResponse("\n the number of dislikes is "+ i+ "!!"));
+        return i;
 
     }
     @GetMapping("pageAnimal/{pageNumber}")
@@ -143,7 +143,7 @@ public class AnimalController {
         return ResponseEntity.ok(animals);
     }*/
 
-    @GetMapping("/animals/sorted-by-likes")
+    @GetMapping("/sortedByLikes")
     public ResponseEntity<?> getAnimalsSortedByLikes() {
         List<Animal> animals = animalRepository.findAll();
         animals.forEach(a -> a.setLikes(ratingAnimalRepository.nbrLikes(a.getIdAnimal())));
@@ -151,7 +151,7 @@ public class AnimalController {
         return ResponseEntity.ok(animals);
     }
 
-    @GetMapping("/animals/sorted-by-dislikes")
+    @GetMapping("/sortedByDislikes")
     public ResponseEntity<?> getAnimalsSortedByDisLikes() {
         List<Animal> animals = animalRepository.findAll();
         animals.forEach(a -> a.setDislikes(ratingAnimalRepository.nbrDisLikes(a.getIdAnimal())));
@@ -169,7 +169,7 @@ public class AnimalController {
         return ResponseEntity.ok(results);
     }
 
-    @GetMapping("/interested-users/count/{idAnimal}")
+    @GetMapping("/interestedUsers/count/{idAnimal}")
     public int countInterestedUsers(@PathVariable long idAnimal) {
         return animalService.countInterestedUsers(idAnimal);
     }
@@ -184,12 +184,12 @@ public class AnimalController {
         // Ajoutez une ligne d'en-tête avec les noms des colonnes
         Row headerRow = sheet.createRow(0);
      //   headerRow.createCell(0).setCellValue("Id");
-        headerRow.createCell(1).setCellValue("Name");
-     //   headerRow.createCell(2).setCellValue("Birth Date");
-        headerRow.createCell(3).setCellValue("Race");
-        headerRow.createCell(4).setCellValue("Description");
-        headerRow.createCell(5).setCellValue("Gender");
-        headerRow.createCell(6).setCellValue("Image");
+        headerRow.createCell(0).setCellValue("Name");
+        headerRow.createCell(1).setCellValue("Birth Date");
+        headerRow.createCell(2).setCellValue("Race");
+        headerRow.createCell(3).setCellValue("Description");
+        headerRow.createCell(4).setCellValue("Gender");
+        headerRow.createCell(5).setCellValue("Image");
     //    headerRow.createCell(7).setCellValue("Likes");
 
         // Récupérez les données sur les animaux à partir de la base de données
@@ -200,12 +200,14 @@ public class AnimalController {
         for (Animal animal : animals) {
             Row row = sheet.createRow(rowNum++);
           //  row.createCell(0).setCellValue(animal.getIdAnimal());
-            row.createCell(1).setCellValue(animal.getNameAnimal());
-         //   row.createCell(2).setCellValue(animal.getBirthDate());
-            row.createCell(3).setCellValue(animal.getRace());
-            row.createCell(4).setCellValue(animal.getDescription());
-            row.createCell(5).setCellValue(animal.getGender());
-            row.createCell(6).setCellValue(animal.getImage());
+            row.createCell(0).setCellValue(animal.getNameAnimal());
+         //   row.createCell(1).setCellValue( (String)animal.getBirthDate());
+         //  row.createCell(2).setCellValue((String)animal.getBirthDate());
+            row.createCell(1).setCellValue(animal.getBirthDate().toString());
+            row.createCell(2).setCellValue(animal.getRace());
+            row.createCell(3).setCellValue(animal.getDescription());
+            row.createCell(4).setCellValue(animal.getGender());
+            row.createCell(5).setCellValue(animal.getImage());
           //  row.createCell(7).setCellValue(animal.getLikes());
         }
 
