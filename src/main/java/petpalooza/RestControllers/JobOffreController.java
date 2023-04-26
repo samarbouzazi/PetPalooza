@@ -3,11 +3,9 @@ package petpalooza.RestControllers;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.web.bind.annotation.*;
-import petpalooza.Entities.Animal;
 import petpalooza.Entities.JobOffer;
 import petpalooza.Repositories.JobOffreRepository;
 import petpalooza.Services.IJobOffre;
-import petpalooza.Services.JobOffreService;
 
 import java.util.List;
 
@@ -65,5 +63,17 @@ public class JobOffreController {
 
         return iJobOffre.filterByOffretype(offretype);
     }
+    @PutMapping("/interested/{idJob}")
+    public String interestedoffre(@PathVariable ("idJob") Long idjob)
+    {
+        iJobOffre.interestOffre( idjob);
+        return "id has been job";
+    }
+    @PostMapping("/interesser/{idJob}/{idUser}")
+    public JobOffer intersted(@PathVariable("idJob") Long idJob, @PathVariable("idUser") Long idUser){
+        return iJobOffre.interesser(idJob,idUser);
+    }
+
+
 
 }

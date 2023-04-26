@@ -11,4 +11,5 @@ import petpalooza.Entities.TypeEvent;
 public class CountType {
     private Long count;
     private TypeEvent type;
+    private  String offretype ;
 }

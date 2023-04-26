@@ -120,6 +120,9 @@ public class User implements Serializable {
     private List<JobOffer> jobOfferss;
     @ElementCollection
     private List<String> interests = new ArrayList<>(); // ajout de la liste des intérêts
+    @ManyToMany(mappedBy = "interestedUserss" ,cascade = CascadeType.ALL)
+    private Set<JobOffer> offreInterested;
+
 
     /////////Iskander/////////////
     @OneToMany

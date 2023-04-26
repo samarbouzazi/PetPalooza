@@ -1,10 +1,13 @@
 package petpalooza.Services;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import petpalooza.Entities.JobOffer;
 import petpalooza.Entities.User;
 import petpalooza.Repositories.JobOffreRepository;
+import petpalooza.Repositories.UserRepository;
+import petpalooza.Services.userServices.IUser;
 import petpalooza.Services.userServices.UserService;
 
 import java.util.*;
@@ -13,10 +16,16 @@ import java.util.*;
 @AllArgsConstructor
 public class JobOffreService implements IJobOffre {
 
-
     JobOffreRepository  jobOffreRepository;
     IEmailService emailSender;
+
     UserService userService;
+
+    UserRepository userRepository;
+
+
+    IUser iUser;
+
     @Override
     public List<JobOffer> findAllByPrice() {
         return jobOffreRepository.findAllByOrderByPrice();
@@ -140,6 +149,33 @@ public class JobOffreService implements IJobOffre {
     @Override
     public List<JobOffer> filterByOffretype(String offretype) {
         return this.jobOffreRepository.filterByOffreType(offretype);
+    }
+    @Override
+    public void interestOffre (long id) {
+        /*this.jobOffreRepository.interestOffre(id);*/
+
+    }
+    ///////////////////interesser
+    @Override
+    public JobOffer interesser(Long idJob, Long idUser) {
+        jobOffreRepository.incrementerNbInteresses(idJob);
+        User user = userRepository.findById(idUser).get();
+        JobOffer jobOffer =jobOffreRepository.findById(idJob).get();
+
+        for (User u:jobOffer.getInterestedUserss()) {
+            if (u.equals(user)){
+                return null;
+            }
+
+        }
+
+        jobOffer.getInterestedUserss().add(user);
+        user.getOffreInterested().add(jobOffer);
+        jobOffreRepository.save(jobOffer);
+        userRepository.save(user);
+        return jobOffer;
+
+
     }
 
 

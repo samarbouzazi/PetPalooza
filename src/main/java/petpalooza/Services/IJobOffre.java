@@ -24,4 +24,9 @@ public interface IJobOffre {
     List<JobOffer> search(float price);
 
     public List<JobOffer> filterByOffretype(String offretype);
+
+    abstract void interestOffre(long id);
+
+    ///////////////////interesser
+    JobOffer interesser(Long idJob, Long idUser);
 }

@@ -8,6 +8,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "JobOffer")
@@ -29,6 +30,12 @@ public class JobOffer implements Serializable  {
     String title;
     String description;
     String offretype;
+    int nbintereteds;
+    @ManyToMany()
+    @JsonIgnore
+    private Set<User> interestedUserss ;
+
+
 
 
 
