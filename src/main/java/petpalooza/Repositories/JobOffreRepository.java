@@ -24,7 +24,8 @@ public interface JobOffreRepository extends JpaRepository<JobOffer, Long> {
     @Modifying
     @Query("UPDATE JobOffer e SET e.nbintereteds = e.nbintereteds + 1 WHERE e.idJob = :offreId")
     void incrementerNbInteresses( Long offreId);
-    /*@Query(value ="select new petpalooza.DTO.CountType(COUNT(*),offretype ) from JobOffer GROUP BY offretype")
+
+    /*@Query(value ="select new petpalooza.DTO.CountType(COUNT(*),offretype) from JobOffer GROUP BY offretype")
     public List<CountType> statistque();*/
 
 }

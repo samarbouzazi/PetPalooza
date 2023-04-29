@@ -1,11 +1,16 @@
 package petpalooza.RestControllers;
 
+import com.stripe.exception.StripeException;
+import com.stripe.model.Charge;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import petpalooza.Entities.JobOffer;
 import petpalooza.Repositories.JobOffreRepository;
 import petpalooza.Services.IJobOffre;
+import petpalooza.Services.PaiementJobService;
 
 import java.util.List;
 
@@ -72,6 +77,17 @@ public class JobOffreController {
     @PostMapping("/interesser/{idJob}/{idUser}")
     public JobOffer intersted(@PathVariable("idJob") Long idJob, @PathVariable("idUser") Long idUser){
         return iJobOffre.interesser(idJob,idUser);
+    }
+    ////PAIEMENT/////
+
+    @PostMapping("/pay")
+    public ResponseEntity<String> charge(@RequestParam("token") String token, @RequestParam("amount") int amount) {
+        try {
+            Charge charge = PaiementJobService.chargeCreditCard(token, amount);
+            return ResponseEntity.ok(" we're glad to inform you that your payment has been successful! ");
+        } catch (StripeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
 

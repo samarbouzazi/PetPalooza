@@ -111,11 +111,16 @@
             <artifactId>spring-boot-starter-reactor-netty</artifactId>
         </dependency>
 <!--skan-->
-
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>5.1.0</version>
+        </dependency>
+        <!-- payment -->
+        <dependency>
+            <groupId>com.stripe</groupId>
+            <artifactId>stripe-java</artifactId>
+            <version>22.16.0</version>
         </dependency>
     </dependencies>
 
