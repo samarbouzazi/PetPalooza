@@ -41,15 +41,20 @@ public class Animal implements Serializable  {
     public void setDislikes (int dislikes) {
         this.dislikes = dislikes;
     }
-    @OneToOne
-    ImageAnimal imageAnimal;
+
     @ManyToOne
     User userAnimal;
 
     @OneToMany(mappedBy = "animal")
+
     // ,cascade = CascadeType.ALL)
-    @JsonIgnore
+   // @JsonIgnore
     //orphanRemoval = true
+
+            // ,cascade = CascadeType.ALL)
+    @JsonIgnore
+            //orphanRemoval = true
+
     List<RatingAnimal> ratings;
 
     @ManyToMany(mappedBy = "interestedAnimals", cascade = CascadeType.ALL)
