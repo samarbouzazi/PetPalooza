@@ -160,7 +160,18 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-reactor-netty</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version>
+        </dependency>
+
+
+        <!--skan-->
+
 <!--skan-->
+
 
         <dependency>
             <groupId>com.google.code.gson</groupId>
