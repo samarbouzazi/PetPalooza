@@ -14,6 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+
 @ToString
 public class Event implements Serializable {
 
@@ -38,13 +39,9 @@ public class Event implements Serializable {
     @Temporal (TemporalType.DATE)
     private Date dateFin;
 
-
-    private String image;
-
     @ManyToOne
     @JsonIgnore
     User owner;
-
 
     @ManyToMany()
     @JsonIgnore
@@ -53,6 +50,11 @@ public class Event implements Serializable {
     @ManyToMany()
     @JsonIgnore
     private Set<User> participants ;
+
+    private String imagePath;
+    private String nameType;
+    @Lob
+    private byte[] content;
 
 
 
