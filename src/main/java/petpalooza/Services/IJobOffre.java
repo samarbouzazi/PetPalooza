@@ -9,7 +9,7 @@ public interface IJobOffre {
     public List<JobOffer> findAllByPrice() ;
 
     public JobOffer addJobOffer(JobOffer jobOffer);
-    public JobOffer updateJobOffer(JobOffer jobOffer);
+    public JobOffer updateJobOffer(JobOffer jobOffer,Long idJob);
     public void deleteJobOffer(long id);
     public List<JobOffer> getAllJobOffers();
     public JobOffer getById (long id);

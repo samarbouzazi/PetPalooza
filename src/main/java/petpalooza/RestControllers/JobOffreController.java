@@ -18,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @CrossOrigin
 @Data
+@RequestMapping("/JobOffre")
 
 public class JobOffreController {
 
@@ -29,9 +30,13 @@ public class JobOffreController {
         return iJobOffre.getAllJobOffers();
     }
 
-    @PutMapping("/updateoffre")
+   /* @PutMapping("/updateoffre")
     public JobOffer updateJobOffer(@RequestBody JobOffer jobOffer) {
         return iJobOffre.updateJobOffer(jobOffer);
+    }*/
+    @PutMapping("/updateoffre/{idJob}")
+    public JobOffer updateEvent(@RequestBody JobOffer jobOffer, @PathVariable("idJob") Long idJob){
+        return iJobOffre.updateJobOffer(jobOffer,idJob);
     }
 
     @PostMapping("/addoffre")

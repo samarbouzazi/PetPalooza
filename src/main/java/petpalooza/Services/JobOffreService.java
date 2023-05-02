@@ -49,10 +49,26 @@ public class JobOffreService implements IJobOffre {
 
     }
 
-    @Override
+   /* @Override
     public JobOffer updateJobOffer(JobOffer jobOffer) {
+
         return jobOffreRepository.save(jobOffer);
-    }
+    }*/
+   @Override
+   public JobOffer updateJobOffer (JobOffer jobOffer,Long idJob){
+
+       JobOffer existingJobOffre = jobOffreRepository.findById(idJob).orElse(null);
+       existingJobOffre.setDescription(jobOffer.getDescription());
+       existingJobOffre.setPrice(jobOffer.getPrice());
+       existingJobOffre.setOffretype(jobOffer.getOffretype());
+       existingJobOffre.setBeginnigDate(jobOffer.getBeginnigDate());
+       existingJobOffre.setEndDate(jobOffer.getEndDate());
+       existingJobOffre.setTitle(jobOffer.getTitle());
+       existingJobOffre.setNbintereteds(jobOffer.getNbintereteds());
+
+       return jobOffreRepository.save(existingJobOffre);
+   }
+
 
     @Override
     public void deleteJobOffer(long id) {
