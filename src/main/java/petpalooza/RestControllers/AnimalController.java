@@ -1,9 +1,11 @@
 package petpalooza.RestControllers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.hibernate.hql.internal.ast.tree.AbstractNullnessCheckNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -13,17 +15,22 @@ import org.springframework.web.servlet.ModelAndView;
 import petpalooza.Entities.Animal;
 import petpalooza.Entities.ImageAnimal;
 import petpalooza.Entities.RatingAnimal;
+import com.google.gson.Gson;
 import petpalooza.Entities.User;
 import petpalooza.Repositories.AnimalRepository;
 import petpalooza.Repositories.ImageAnimalRepository;
 import petpalooza.Repositories.RatingAnimalRepository;
+import petpalooza.Repositories.UserRepository;
 import petpalooza.Services.AnimalService;
 import petpalooza.security.payload.response.MessageResponse;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.text.DateFormatter;
 import javax.websocket.server.PathParam;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
@@ -32,6 +39,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/animal")
+@Slf4j
 @CrossOrigin
 public class AnimalController {
     @Autowired
@@ -48,40 +56,37 @@ public class AnimalController {
         return this.animalService.getAllAnimals();
     }
 
-    @PutMapping("/update")
-    public Animal updateAnimal(@RequestBody Animal animal){
-        return this.animalService.updateAnimal(animal);
+    @PutMapping("/update/{id}")
+    public Animal updateAnimal(@RequestBody Animal animal, @PathVariable("id") Long id){
+        return this.animalService.updateAnimal(animal, id);
     }
 
     @PostMapping("/add")
     public Animal addAnimal(
-            @RequestParam("nameAnimal")String nameAnimal,
-            @RequestParam("BirthDate")String BirthDate,
-            @RequestParam("race")String race,
-            @RequestParam("description")String description,
-            @RequestParam("gender")String gender,
-            @RequestParam("image")MultipartFile image
-            ) throws IOException, ParseException {
-        ImageAnimal imageAnimal= new ImageAnimal() ;
-        imageAnimal.setContent(image.getBytes());
-        imageAnimal.setName(image.getOriginalFilename());
+            @RequestParam("animal") String anim,
+            @RequestParam("image")MultipartFile file
+    ) throws IOException {
+        Animal anima = new Gson().fromJson(anim, Animal.class);
 
-        Animal animal = new Animal();
-        animal.setNameAnimal(nameAnimal);
-        animal.setBirthDate(new SimpleDateFormat("yyyy-mm-dd").parse(BirthDate));
-        animal.setRace(race);
-        animal.setDescription(description);
-        animal.setGender(gender);
-        animal.setLikes(0);
-        animal.setDislikes(0);
-        animal.setImageAnimal(this.imageAnimalRepository.save(imageAnimal));
-        return this.animalService.addAnimal(animal);
+
+        String image=file.getOriginalFilename();
+        String path="C://xampp/htdocs/img";
+
+        byte[] bytes = image.getBytes();
+        int image2=bytes.toString().hashCode();
+        Files.copy(file.getInputStream(), Paths.get(path+ File.separator+image2+".jpg"));
+
+        anima.setImage(""+image2);
+
+        return this.animalService.addAnimal(anima);
     }
 
     @DeleteMapping("/delete/{id}")
     public void deleteAnimal(@PathVariable long id){
         this.animalService.deleteAnimal(id);
     }
+
+
 
     @GetMapping("/{id}")
     public Animal getById(@PathVariable long id){
@@ -112,10 +117,7 @@ public class AnimalController {
         return this.animalService.getByGender(genderAnimal);
     }
 
-    @PostMapping("/rate")
-    public RatingAnimal rate(@RequestBody RatingAnimal ratingAnimal){
-        return this.animalService.rate(ratingAnimal);
-    }
+
 
     @GetMapping("/getlikes/{idAnimal}")
     public List<RatingAnimal> getlikes(@PathVariable long idAnimal){
@@ -128,9 +130,54 @@ public class AnimalController {
         return this.animalService.getdislikes(idAnimal);
     }
 
-    @GetMapping("/getrate/{idAnimal}/{idUser}")
-    public RatingAnimal likeUserToAnimal(@PathVariable long idAnimal,@PathVariable long idUser){
-        return this.animalService.likeUserToAnimal(idAnimal,idUser);
+    @PostMapping("/addlike/{idAnimal}/{idUser}")
+    public RatingAnimal addlike(@RequestBody RatingAnimal ratingAnimal,@PathVariable long idAnimal,@PathVariable long idUser){
+
+        if(animalService.likeUserToAnimal(idAnimal,idUser) != null && animalService.likeUserToAnimal(idAnimal,idUser).isLiked()){
+            return  null;
+        }
+        else if(animalService.likeUserToAnimal(idAnimal,idUser) != null && !animalService.likeUserToAnimal(idAnimal,idUser).isLiked()){
+            animalService.deleteRatinganimal(animalService.likeUserToAnimal(idAnimal,idUser).getIdRating());
+
+
+            return animalService.rate(ratingAnimal);
+        }
+        else {
+            return animalService.rate(ratingAnimal);
+        }
+
+    }
+
+    @PostMapping("/addDislike/{idAnimal}/{idUser}")
+    public RatingAnimal addDislike(@RequestBody RatingAnimal ratingAnimal,@PathVariable long idAnimal,@PathVariable long idUser){
+
+        if(animalService.likeUserToAnimal(idAnimal,idUser) != null && !animalService.likeUserToAnimal(idAnimal,idUser).isLiked()){
+            return  null;
+        }
+        else if(animalService.likeUserToAnimal(idAnimal,idUser) != null && animalService.likeUserToAnimal(idAnimal,idUser).isLiked()){
+            animalService.deleteRatinganimal(animalService.likeUserToAnimal(idAnimal,idUser).getIdRating());
+            return animalService.rate(ratingAnimal);
+        }
+        else {
+            return animalService.rate(ratingAnimal);
+        }
+
+    }
+
+    @PostMapping("/rate")
+    public RatingAnimal rate(@RequestBody RatingAnimal ratingAnimal,@PathVariable long idAnimal,@PathVariable long idUser){
+        if(this.animalService.likeUserToAnimal(idAnimal,idUser).isLiked()==ratingAnimal.isLiked())
+            return  null;
+        if(this.animalService.likeUserToAnimal(idAnimal,idUser).isLiked()==!ratingAnimal.isLiked()){
+            RatingAnimal ratingAnimal1 = ratingAnimalRepository.findById(ratingAnimal.getIdRating()).get();
+            //  ratingAnimal1.setLiked();
+        }
+
+
+        return this.animalService.rate(ratingAnimal);
+
+
+
     }
 
     @GetMapping("/interested/{idAnimal}/{idUser}")
@@ -139,9 +186,9 @@ public class AnimalController {
     }
     //hey
     @GetMapping ("/nbrLikesOfAnimal/{idAnimal}")
-    public int getLikes(@PathVariable("idAnimal") long idAnimal){
+    public int getLikes(@PathVariable long idAnimal){
         int s = ratingAnimalRepository.nbrLikes(idAnimal);
-      return  s;
+        return  s;
 
     }
 
@@ -212,14 +259,14 @@ public class AnimalController {
 
         // Ajoutez une ligne d'en-tête avec les noms des colonnes
         Row headerRow = sheet.createRow(0);
-     //   headerRow.createCell(0).setCellValue("Id");
+        //   headerRow.createCell(0).setCellValue("Id");
         headerRow.createCell(0).setCellValue("Name");
         headerRow.createCell(1).setCellValue("Birth Date");
         headerRow.createCell(2).setCellValue("Race");
         headerRow.createCell(3).setCellValue("Description");
         headerRow.createCell(4).setCellValue("Gender");
         headerRow.createCell(5).setCellValue("Image");
-    //    headerRow.createCell(7).setCellValue("Likes");
+        //    headerRow.createCell(7).setCellValue("Likes");
 
         // Récupérez les données sur les animaux à partir de la base de données
         List<Animal> animals = animalRepository.findAll();
@@ -228,16 +275,16 @@ public class AnimalController {
         int rowNum = 1;
         for (Animal animal : animals) {
             Row row = sheet.createRow(rowNum++);
-          //  row.createCell(0).setCellValue(animal.getIdAnimal());
+            //  row.createCell(0).setCellValue(animal.getIdAnimal());
             row.createCell(0).setCellValue(animal.getNameAnimal());
-         //   row.createCell(1).setCellValue( (String)animal.getBirthDate());
-         //  row.createCell(2).setCellValue((String)animal.getBirthDate());
+            //   row.createCell(1).setCellValue( (String)animal.getBirthDate());
+            //  row.createCell(2).setCellValue((String)animal.getBirthDate());
             row.createCell(1).setCellValue(animal.getBirthDate().toString());
             row.createCell(2).setCellValue(animal.getRace());
             row.createCell(3).setCellValue(animal.getDescription());
             row.createCell(4).setCellValue(animal.getGender());
             //row.createCell(5).setCellValue(animal.getImage());
-          //  row.createCell(7).setCellValue(animal.getLikes());
+            //  row.createCell(7).setCellValue(animal.getLikes());
         }
 
         // Configurez la réponse HTTP pour renvoyer le fichier Excel en tant que réponse

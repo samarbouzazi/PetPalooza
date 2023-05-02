@@ -31,7 +31,7 @@ public class Animal implements Serializable  {
     private String race;
     private String description;
     private String gender;
-   // private String image;
+    private String image;
     private int likes;
     public void setLikes(int likes) {this.likes = likes;
     }
@@ -39,16 +39,17 @@ public class Animal implements Serializable  {
     public void setDislikes (int dislikes) {
         this.dislikes = dislikes;
     }
-    @OneToOne
-    ImageAnimal imageAnimal;
+
     @ManyToOne
     User userAnimal;
 
     @OneToMany(mappedBy = "animal")
+            // ,cascade = CascadeType.ALL)
     @JsonIgnore
+            //orphanRemoval = true
     List<RatingAnimal> ratings;
 
-    @ManyToMany(mappedBy = "interestedAnimals")
+    @ManyToMany(mappedBy = "interestedAnimals", cascade = CascadeType.ALL)
     @JsonIgnore
     List<User> interestedUsers;
 }
