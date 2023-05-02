@@ -106,6 +106,8 @@ public class User implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy="userAnimal")
     @JsonIgnore
     private Set<Animal> animals;
+
+
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     List<RatingAnimal> ratings;

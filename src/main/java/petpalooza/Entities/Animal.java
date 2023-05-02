@@ -25,13 +25,15 @@ public class Animal implements Serializable  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long idAnimal;
     private String nameAnimal;
-    // @JsonFormat(pattern = "YYYY-MM-DD")
+
+
     @Temporal(TemporalType.DATE)
     private Date birthDate;
     private String race;
     private String description;
     private String gender;
     private String image;
+
     private int likes;
     public void setLikes(int likes) {this.likes = likes;
     }
@@ -39,7 +41,8 @@ public class Animal implements Serializable  {
     public void setDislikes (int dislikes) {
         this.dislikes = dislikes;
     }
-
+    @OneToOne
+    ImageAnimal imageAnimal;
     @ManyToOne
     User userAnimal;
 

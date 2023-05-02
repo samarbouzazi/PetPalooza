@@ -62,21 +62,10 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
     }
 
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-// return http.csrf().disable().authorizeRequests().anyRequest().permitAll().and().build();
 
-
-//      http.cors().and().csrf().disable()
-//              .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-//              .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-//              .authorizeRequests().antMatchers("/public/**").permitAll()
-//            //  .antMatchers("/api/test/**").permitAll()
-//              .anyRequest().authenticated();
-//
-//      http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-//      return http.build();
-//    }
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+ //return http.csrf().disable().authorizeRequests().anyRequest().permitAll().and().build();
 
 
         http.cors().and().csrf().disable()
@@ -100,18 +89,18 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
         return http.build();
     }
 }
-
-//
 //
 //    http.cors().and().csrf().disable()
 //        .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 //        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 //        .authorizeRequests()
-//            .antMatchers("/public/login","/private/user/public","/animal/**").permitAll()
-//
-//            .antMatchers("/private/user/admin","/admin/**").hasRole("ADMIN")
-//            .antMatchers("/private/user/mod").hasRole("MANAGER").antMatchers("/private/user/profile").authenticated();
-////    http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/public/logout"));
+//            .antMatchers("/public/**").permitAll()
+//            .antMatchers("/private/user/admin").hasRole("ADMIN")
+//            .antMatchers("/private/user/user").hasRole("USER")
+//            .antMatchers("/private/user/mod").hasRole("MANAGER")
+//          .antMatchers("/animal/**", "/appointment/**", "/profile/**", "/Questions/**","/Responses/**", "/admin/**").authenticated();
+////    http.logout().logoutRequestMatcher(new AntPathReque
+// stMatcher("/public/logout"));
 //  http  .logout().logoutRequestMatcher(new AntPathRequestMatcher("/public/logout"))
 //            .logoutSuccessUrl("/logout.done").deleteCookies("JSESSIONID")
 //            .invalidateHttpSession(true);
@@ -121,7 +110,3 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
 //    http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 //
 //    return http.build();
-  //}
-
-
-
