@@ -43,7 +43,8 @@ public class Animal implements Serializable  {
     @ManyToOne
     User userAnimal;
 
-    @OneToMany(mappedBy = "animal",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "animal")
+            // ,cascade = CascadeType.ALL)
     @JsonIgnore
             //orphanRemoval = true
     List<RatingAnimal> ratings;
