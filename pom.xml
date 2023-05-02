@@ -18,7 +18,7 @@
     </properties>
 
     <dependencies>
-<dependency>
+        <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>1.6.9</version>
@@ -27,6 +27,15 @@
    <groupId>org.springframework.boot</groupId>
    <artifactId>spring-boot-starter-web</artifactId>
 </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -74,7 +83,7 @@
 <!--samar-->
         <!--pdf-->
 
-        <!--samar-->
+
 
         <dependency>
             <groupId>com.itextpdf</groupId>
@@ -151,6 +160,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-reactor-netty</artifactId>
         </dependency>
+
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
@@ -159,6 +169,9 @@
 
 
         <!--skan-->
+
+<!--skan-->
+
 
         <dependency>
             <groupId>org.apache.poi</groupId>

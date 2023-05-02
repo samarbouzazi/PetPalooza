@@ -1,5 +1,6 @@
 package petpalooza.Services.userServices;
 
+import org.springframework.http.ResponseEntity;
 import petpalooza.Entities.ERole;
 import petpalooza.Entities.Role;
 import petpalooza.Entities.User;
@@ -27,7 +28,7 @@ public interface IUser {
     void blockUser(Long idUser);
 //    List<User> findbyRoles(String roles);
 
-    void SignalerUser(Long idUser);
+    ResponseEntity<?> SignalerUser(Long idUser);
 
 
 

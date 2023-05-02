@@ -1,16 +1,21 @@
 package petpalooza.Repositories;
 
+import net.bytebuddy.TypeCache;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 import petpalooza.Entities.ERole;
 import petpalooza.Entities.Role;
 import petpalooza.Entities.User;
+import org.springframework.data.domain.Sort;
 
 import javax.jws.soap.SOAPBinding;
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<User,Long> {
+public interface UserRepository extends JpaRepository<User,Long>, PagingAndSortingRepository<User, Long> {
 
    //list is a collection that can hold multiple objects of the same type,
     // while Optional is a container object that may or may not contain a value of a specific type.
@@ -31,6 +36,9 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
    ///////////
 
+    ///List<User> findAll(Pageable pageablen  );
+   /// Page<User> findAll(Pageable pageable, Sort sort);
+    //Page<User> findAll(Pageable pageable);
 //    List<User> findByRoleName(ERole name);
 
 

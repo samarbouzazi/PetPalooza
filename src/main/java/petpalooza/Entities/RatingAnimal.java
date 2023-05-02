@@ -23,5 +23,5 @@ public class RatingAnimal implements Serializable {
     @ManyToOne
     User user;
     boolean liked;
-
+//ehy
 }
