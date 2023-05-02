@@ -32,7 +32,7 @@ import java.util.List;
 @RestController
 @Data
 @RequestMapping("admin")
-@CrossOrigin
+@CrossOrigin("http://localhost:4200/*")
 
 public class EventController {
 
