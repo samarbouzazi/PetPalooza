@@ -25,70 +25,81 @@ import petpalooza.security.predifinedClasses.UserDetailsServiceImpl;
      securedEnabled = true,
      jsr250Enabled = true,
     prePostEnabled = true)
+
+
 public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
-  @Autowired
-  UserDetailsServiceImpl userDetailsService;
+    @Autowired
+    UserDetailsServiceImpl userDetailsService;
 
-  @Autowired
-  private AuthEntryPointJwt unauthorizedHandler;
+    @Autowired
+    private AuthEntryPointJwt unauthorizedHandler;
 
-  @Bean
-  public AuthTokenFilter authenticationJwtTokenFilter() {
-    return new AuthTokenFilter();
-  }
-
-
-  
-  @Bean
-  public DaoAuthenticationProvider authenticationProvider() {
-      DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-       
-      authProvider.setUserDetailsService(userDetailsService);
-      authProvider.setPasswordEncoder(passwordEncoder());
-   
-      return authProvider;
-  }
+    @Bean
+    public AuthTokenFilter authenticationJwtTokenFilter() {
+        return new AuthTokenFilter();
+    }
 
 
-  
-  @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-    return authConfig.getAuthenticationManager();
-  }
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+
+        return authProvider;
+    }
 
 
-  @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 // return http.csrf().disable().authorizeRequests().anyRequest().permitAll().and().build();
 
 
+//      http.cors().and().csrf().disable()
+//              .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+//              .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+//              .authorizeRequests().antMatchers("/public/**").permitAll()
+//            //  .antMatchers("/api/test/**").permitAll()
+//              .anyRequest().authenticated();
+//
+//      http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+//      return http.build();
+//    }
 
 
-    http.cors().and().csrf().disable()
-        .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-        .authorizeRequests()
-            .antMatchers("/public/**").permitAll()
-            .antMatchers("/private/user/admin").hasRole("ADMIN")
-            .antMatchers("/private/user/user").hasRole("USER")
-            .antMatchers("/private/user/mod").hasRole("MANAGER")
-          .antMatchers("/animal/**", "/appointment/**", "/profile/**", "/Questions/**","/Responses/**", "/admin/**").authenticated();
-//    http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/public/logout"));
-  http  .logout().logoutRequestMatcher(new AntPathRequestMatcher("/public/logout"))
-            .logoutSuccessUrl("/logout.done").deleteCookies("JSESSIONID")
-            .invalidateHttpSession(true);
+        http.cors().and().csrf().disable()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .authorizeRequests()
+                .antMatchers("/public/**").permitAll()
+                .antMatchers("/admin/user/*").hasRole("ADMIN")
+                .antMatchers("/private/user/user").hasRole("USER")
+                .antMatchers("/private/user/mod").hasRole("MANAGER")
+                .antMatchers("/animal/**", "/appointment/**", "/profile/**", "/Questions/**", "/Responses/**", "/private/user/admin").authenticated();
+        http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/public/logout"));
+        http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/public/logout"))
+                .logoutSuccessUrl("/logout.done").deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true);
 
-    http.authenticationProvider(authenticationProvider());
+        http.authenticationProvider(authenticationProvider());
 
-    http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
-    return http.build();
-  }
+        return http.build();
+    }
+}
 
 //
 //
@@ -113,5 +124,4 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
   //}
 
 
-}
 

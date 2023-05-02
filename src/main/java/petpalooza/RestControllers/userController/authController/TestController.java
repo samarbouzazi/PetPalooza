@@ -33,7 +33,7 @@ public class TestController {
   public String moderatorAccess() {
     return "Moderator Board.";
   }
-
+  @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("/admin")
   public String adminAccess(Authorization authorization) {
     Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();

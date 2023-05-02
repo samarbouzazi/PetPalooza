@@ -2,6 +2,7 @@ package petpalooza.RestControllers.userController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import petpalooza.Entities.User;
 import petpalooza.Services.userServices.IUser;
@@ -35,6 +36,8 @@ public class UserController {
         return  iUser.findUserByID(idUser);
 
     }
+
+   /// @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/list")
     public List<User> retrieveAllUser(){
         return iUser.getAllUser();
@@ -45,12 +48,19 @@ public class UserController {
         return iUser.findUserByID(id);
     }
 
+//    @DeleteMapping("delete/{id}")
+//    public ResponseEntity<?> deleteUser(@PathVariable("id")  Long id){
+//        iUser.deleteUser(id);
+//        return ResponseEntity.ok(new MessageResponse("User "+
+//                iUser.findUserByID(id).getUsername()
+//                +"  delete it  successfully!!!"));
+//    }
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable("id")  Long id){
-        return ResponseEntity.ok(new MessageResponse("User "+
-                iUser.findUserByID(id).getUsername()
-                +"  delete it  successfully!!!"));
+    public void deleteUser(@PathVariable("id")  Long id){
+        iUser.deleteUser(id);
+
     }
+
 
     @PutMapping("block/{id}")
     public ResponseEntity<?>  block(@PathVariable("id") Long id)
