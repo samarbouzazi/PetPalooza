@@ -2,6 +2,7 @@ package petpalooza.Services;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
@@ -10,15 +11,22 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import petpalooza.Entities.Email;
+import petpalooza.Entities.User;
+import petpalooza.Entities.Event;
+import petpalooza.Repositories.UserRepository;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
+import java.util.List;
 
 
 @Service
 @Slf4j
 public class EmailService implements IEmailService{
+
+    @Autowired
+    UserRepository userRepository;
 
     private final JavaMailSender javaMailSender;
     @Value("${spring.mail.username}")
@@ -28,18 +36,42 @@ public class EmailService implements IEmailService{
         this.javaMailSender = javaMailSender;
     }
 
-    @Override
-    public String sendSimpleMail(Email details) {
-        SimpleMailMessage mailMessage
-                = new SimpleMailMessage();
-        mailMessage.setFrom(sender);
-        mailMessage.setTo(details.getRecipient());
-        mailMessage.setText(details.getMsgBody());
-        mailMessage.setSubject(details.getSubject());
-        javaMailSender.send(mailMessage);
-        return "Mail Sent Successfully...";
 
+
+    @Override
+    public String sendSimpleMail(Event event) {
+        String subject = "Nouvel événement ajouté : " + event.getTitre();
+        String message = "Cher utilisateur,\n\n" + "Un nouvel événement a été ajouté : " + event.getTitre() +
+                "\nLocalisation : " + event.getLocation() + "\nDate de début : " + event.getDateDebut()+
+                "\n\nCordialement,\nPetPalooza";
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setFrom(sender);
+            mailMessage.setTo(user.getEmail());
+            mailMessage.setText(message);
+            mailMessage.setSubject(subject);
+            javaMailSender.send(mailMessage);
+        }
+        return "Mail Sent Successfully...";
     }
+
+    @Override
+    public String sendEmail(String email, String subject, String message) {
+
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setFrom(sender);
+            mailMessage.setTo(user.getEmail());
+            mailMessage.setText(subject);
+            mailMessage.setSubject(message);
+            javaMailSender.send(mailMessage);
+        }
+
+        return null;
+    }
+
     @Override
     public String sendMailWithAttachment(Email details) {
         MimeMessage mimeMessage

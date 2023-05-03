@@ -139,7 +139,7 @@ public class EventService implements IEvent {
 //        List<Event> collect = stream.filter(e -> e.getTitre().equals(s)).collect(Collectors.toList());
 //        collect.forEach(System.out::println);
         return eventRepository.findAll().stream().filter(event -> event.getTitre()!=null )
-                .filter(event -> event.getTitre().equals(s)  ).collect(Collectors.toList());
+                .filter(event -> event.getTitre().contains(s)  ).collect(Collectors.toList());
         //return eventRepository.findAll();
         //eventRepository.findAll().stream().filter(event -> event.getTitre().equals("Don VacPets")).forEach(System.out::println);
 

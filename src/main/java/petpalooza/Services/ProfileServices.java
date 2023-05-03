@@ -8,12 +8,6 @@ import lombok.Data;
 import petpalooza.Entities.Profile;
 
 import petpalooza.Repositories.ProfileRepository;
-
-
-
-
-
-
 @Service
 @Data
 @AllArgsConstructor

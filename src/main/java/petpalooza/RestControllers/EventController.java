@@ -59,10 +59,11 @@ public class EventController {
     @PostMapping ("/addev")
     public Event addEvent(@RequestBody Event event,Authorization authorization){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        String userName = loggedInUser.getName();
-        User user = userRepository.findByUsername(userName).get();
+        //String userName = loggedInUser.getName();
+        //User user = userRepository.findByUsername(userName).get();
         //Long id = user.getIdUser();
-        event.setOwner(user);
+        //event.setOwner(user);
+        emailService.sendSimpleMail(event);
         return iEvent.addeEvent(event);
     }
 
@@ -94,11 +95,11 @@ public class EventController {
 
 
     // Sending a simple Email
-    @PostMapping("/sendMail")
-    public String sendMail(@RequestBody Email details) {
-        String status = emailService.sendSimpleMail(details);
-        return status;
-    }
+//    @PostMapping("/sendMail")
+//    public String sendMail(@RequestBody Email details) {
+//        String status = emailService.sendSimpleMail(details);
+//        return status;
+//    }
 
     // Sending email with attachment
     @PostMapping("/sendMailWithAttachment")
