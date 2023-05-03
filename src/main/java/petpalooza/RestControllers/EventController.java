@@ -1,5 +1,6 @@
 package petpalooza.RestControllers;
 
+import com.google.gson.Gson;
 import lombok.Data;
 import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import petpalooza.DTO.CountType;
@@ -18,7 +21,10 @@ import petpalooza.Services.IEvent;
 import petpalooza.utils.ExportpdfService;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -50,18 +56,56 @@ public class EventController {
     }
 
 
-//    add event and affect to user
-    @PostMapping ("/addev")
-    public Event addEvent(@ModelAttribute Event event,Authorization authorization, @RequestParam("image") MultipartFile image)throws IOException {
-        //Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        //String userName = loggedInUser.getName();
-        //User user = userRepository.findByUsername(userName).get();
-        //Long id = user.getIdUser();
-        //event.setOwner(user);
-        emailService.sendSimpleMail(event);
-        return iEvent.addeEvent(event,image);
-    }
+//    @PostMapping("/add")
+//    public Animal addAnimal(
+//            @RequestParam("animal") String anim,
+//            @RequestParam("image")MultipartFile file
+//    ) throws IOException {
+//        Animal anima = new Gson().fromJson(anim, Animal.class);
+//
+//
+//        String image=file.getOriginalFilename();
+//        String path="C://wamp64/www/img";
+//
+//        byte[] bytes = image.getBytes();
+//        int image2=bytes.toString().hashCode();
+//        Files.copy(file.getInputStream(), Paths.get(path+ File.separator+image2+".jpg"));
+//
+//        anima.setImage(""+image2);
+//
+//        return this.animalService.addAnimal(anima);
+//    }
 
+
+
+//    add event and affect to user
+//    @PostMapping ("/addev")
+//    public Event addEvent(@ModelAttribute Event event,Authorization authorization, @RequestParam("image") MultipartFile image)throws IOException {
+//        emailService.sendSimpleMail(event);
+//        return iEvent.addeEvent(event,image);
+//    }
+
+
+
+    @PostMapping("/addev")
+    public Event addEvent(
+            @RequestParam("event") String ev,
+            @RequestParam("image")MultipartFile file
+    ) throws IOException {
+        Event event = new Gson().fromJson(ev, Event.class);
+
+
+        String image=file.getOriginalFilename();
+        String path="C://wamp64/www/img";
+
+        byte[] bytes = image.getBytes();
+        int image2=bytes.toString().hashCode();
+        Files.copy(file.getInputStream(), Paths.get(path+ File.separator+image2+".jpg"));
+
+        event.setImage(""+image2);
+
+        return iEvent.addeEvent(event);
+    }
 
 //    @PostMapping ("/addev")
 //    public Event addEvent(@RequestBody Event event, @RequestParam("imageEvent") MultipartFile imageEvent)throws IOException {

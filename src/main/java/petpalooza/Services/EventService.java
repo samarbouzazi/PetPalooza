@@ -78,19 +78,7 @@ public class EventService implements IEvent {
 //    }
 
     @Override
-    public Event addeEvent(Event event
-            , MultipartFile image
-    )
-            throws IOException
-    {
-        byte[] imageData = image.getBytes();
-        System.err.println(imageData.toString());
-        event.setContent(imageData);
-        Path directory = Paths.get("images");
-        if (!Files.exists(directory)) {Files.createDirectories(directory);}
-        Path imagePath = directory.resolve(UUID.randomUUID().toString() + "." + FilenameUtils.getExtension(image.getOriginalFilename()));
-//        Files.write(imagePath, imageData);
-
+    public Event addeEvent(Event event){
         return eventRepository.save(event);
     }
 

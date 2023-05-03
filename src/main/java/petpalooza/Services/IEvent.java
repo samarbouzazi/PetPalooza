@@ -15,9 +15,7 @@ public interface IEvent {
 
     public List<Event> retrieveallEvents();
     public Event updateEvent(Event event,Long id);
-    public Event addeEvent(Event event
-            , MultipartFile image
-    )
+    public Event addeEvent(Event event)
             throws IOException
             ;
     public void deletEvent(Long id);

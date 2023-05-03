@@ -52,10 +52,7 @@ public class Event implements Serializable {
     @JsonIgnore
     private Set<User> participants ;
 
-    private String imagePath;
-    private String nameType;
-    @Lob
-    private byte[] content;
+    private String image;
 
 
 
