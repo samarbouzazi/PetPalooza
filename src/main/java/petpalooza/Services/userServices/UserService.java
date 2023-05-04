@@ -128,5 +128,10 @@ public class UserService implements IUser{
         }
     }
 
+    @Override
+    public List<User> getRole(Long idUser) {
+        return  null;
+    }
+
 
 }

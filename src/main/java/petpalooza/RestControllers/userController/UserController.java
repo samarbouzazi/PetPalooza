@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import petpalooza.Entities.Role;
 import petpalooza.Entities.User;
 import petpalooza.Services.userServices.IUser;
 import petpalooza.security.payload.response.MessageResponse;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -79,4 +81,24 @@ return     iUser.SignalerUser(idUser);
 //    return ResponseEntity.ok(new MessageResponse( user.getUsername() +"is  signaler " +" the total number of signal is "+ user.getNumberOfSignal()) );
 }
 
+
+@GetMapping("getRole/{idUser}")
+    public void getRoleToAuser(@PathVariable("idUser") long idUser){
+        this.iUser.getAllUser();
+}
+
+
+
+
+
+
+
+
+
+
+    @GetMapping("/users/{userId}")
+    public List<Role> getUserRoles(@PathVariable Long userId) {
+        User user = iUser.findUserByID(userId);
+        return new ArrayList<>(user.getRoles());
+    }
 }

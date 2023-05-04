@@ -65,18 +65,19 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
- //return http.csrf().disable().authorizeRequests().anyRequest().permitAll().and().build();
+//      return http.csrf().disable().authorizeRequests().anyRequest().permitAll().and().build();
+//  }
 
 
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("/public/**").permitAll()
-                .antMatchers("/admin/user/*").hasRole("ADMIN")
+                .antMatchers("/public/**", "/animal/**").permitAll()
+                .antMatchers("/admin/user/list").hasRole("ADMIN")
                 .antMatchers("/private/user/user").hasRole("USER")
                 .antMatchers("/private/user/mod").hasRole("MANAGER")
-                .antMatchers("/animal/**", "/appointment/**", "/profile/**", "/Questions/**", "/Responses/**", "/private/user/admin").authenticated();
+                .antMatchers("/appointment/**", "/profile/**", "/Questions/**", "/Responses/**").authenticated();
         http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/public/logout"));
         http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/public/logout"))
                 .logoutSuccessUrl("/logout.done").deleteCookies("JSESSIONID")
