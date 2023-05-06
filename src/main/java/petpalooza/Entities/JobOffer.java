@@ -18,7 +18,6 @@ import java.util.Set;
 @NoArgsConstructor
 
 public class JobOffer implements Serializable  {
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     Long idJob;
