@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 
 @RestController
-@CrossOrigin
+@CrossOrigin()
 @RequestMapping("public/user")
 public class VerifyAccountController {
     @Autowired
@@ -31,6 +31,7 @@ static  String linkk="";
     @PostMapping("/verifyAccountLink")
     public ResponseEntity<?> VerifyAccountLink(HttpServletRequest request) {
         String email = request.getParameter("email");
+        System.out.println("email is" + email);
 
 
         try {
@@ -57,8 +58,10 @@ static  String linkk="";
         MimeMessageHelper helper = new MimeMessageHelper(message);
         helper.setFrom("timoumimahmoud616@gmail.com", "Admin ");
         helper.setTo(email);
-       String li="http://localhost:8088/"+"verifyAccountLink?email"+email;
-        System.out.println("the link static is"+ li);
+//       String li="http://localhost:8088/"+"verifyAccountLink?email"+email;
+
+       String Ang="http://localhost:4200/public/user/verifyAccountLink/?email="+ email;
+//        System.out.println("the link static is"+ li);
 
         String  vLink="http://localhost:8888/public/user/verifyAccountLink/?email="+email;
 
@@ -98,7 +101,7 @@ static  String linkk="";
                 "               \n" +
                 "                    \n" +
                 "  \n" +
-                "          <p>  <a href=\""+vLink+"\"> Change my password</a> </p>\n" +
+                "          <p>  <a href=\""+Ang+"\"> Verify My account </a> </p>\n" +
                 "                    \n" +
                 "                    \n" +
                 "                    \n" +

@@ -2,16 +2,15 @@ package petpalooza.Entities;
 
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.*;
 
 @Entity
 @Table(name = "Animal")
@@ -25,22 +24,31 @@ public class Animal implements Serializable  {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long idAnimal;
-    String nameAnimal;
-    Date birthDate;
-    String race;
-    String description;
-    String gender;
-    String image;
+    private String nameAnimal;
+   // @JsonFormat(pattern = "YYYY-MM-DD")
+    @Temporal(TemporalType.DATE)
+    private Date birthDate;
+    private String race;
+    private String description;
+    private String gender;
+    private String image;
+    private int likes;
+    public void setLikes(int likes) {this.likes = likes;
+    }
+    private int dislikes;
+    public void setDislikes (int dislikes) {
+        this.dislikes = dislikes;
+    }
 
     @ManyToOne
     User userAnimal;
 
     @OneToMany(mappedBy = "animal")
+            // ,cascade = CascadeType.ALL)
     @JsonIgnore
+            //orphanRemoval = true
     List<RatingAnimal> ratings;
 
-    @ManyToMany(mappedBy = "interestedAnimals")
-    @JsonIgnore
+    @ManyToMany(mappedBy = "interestedAnimals", cascade = CascadeType.ALL)
     List<User> interestedUsers;
-
 }
