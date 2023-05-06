@@ -1,6 +1,9 @@
 package petpalooza.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import petpalooza.Entities.Animal;
 import petpalooza.Entities.RatingAnimal;
@@ -25,8 +28,14 @@ public class AnimalService implements IAnimal{
     }
 
     @Override
-    public Animal updateAnimal(Animal animal) {
-        return this.animalRepository.save(animal);
+    public Animal updateAnimal(Animal animal, Long id) {
+        Animal existingAnimal = animalRepository.findById(id).orElse(null);
+        existingAnimal.setNameAnimal(animal.getNameAnimal());
+        existingAnimal.setBirthDate(animal.getBirthDate());
+        existingAnimal.setRace(animal.getRace());
+        existingAnimal.setDescription(animal.getDescription());
+        existingAnimal.setGender(animal.getGender());
+        return this.animalRepository.save(existingAnimal);
     }
 
     @Override
@@ -83,8 +92,14 @@ public class AnimalService implements IAnimal{
         return this.ratingAnimalRepository.likeUserToAnimal(idAnimal, idUser);
     }
 
+
+    public void deleteRatinganimal(long id){
+        ratingAnimalRepository.deleteById(id);
+    }
+
     @Override
     public RatingAnimal rate (RatingAnimal ratingAnimal) {
+
         return this.ratingAnimalRepository.save(ratingAnimal);
     }
 
@@ -93,7 +108,7 @@ public class AnimalService implements IAnimal{
         User user = userRepository.findById(idUser).get();
         Animal animal = animalRepository.findById(idAnimal).get();
         for (User u : animal.getInterestedUsers()
-             ) {
+        ) {
             if (u.equals(user)){
                 return null;
             }
@@ -104,6 +119,29 @@ public class AnimalService implements IAnimal{
         return animalRepository.save(animal);
 
     }
+
+    @Override
+    public Page<Animal> findPage(int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber - 1,6);
+        return animalRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Object[]> getAnimalRaceStats() {
+        List<Object[]> results = animalRepository.getAnimalRaceStats();
+        return results;
+    }
+    public List<Object[]> getAnimalGenderStats() {
+        List<Object[]> results = animalRepository.getAnimalGenderStats();
+        return results;
+    }
+    @Override
+    public int countInterestedUsers(long idAnimal) {
+        return animalRepository.countInterestedUsers(idAnimal);
+    }
+
+
+
 
 
 }
