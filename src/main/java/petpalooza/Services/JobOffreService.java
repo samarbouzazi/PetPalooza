@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import petpalooza.Entities.JobOffer;
 import petpalooza.Entities.User;
 import petpalooza.Repositories.JobOffreRepository;
+import petpalooza.Repositories.UserRepository;
+import petpalooza.Services.userServices.IUser;
 import petpalooza.Services.userServices.UserService;
 
 import java.util.*;
@@ -13,10 +15,16 @@ import java.util.*;
 @AllArgsConstructor
 public class JobOffreService implements IJobOffre {
 
-
     JobOffreRepository  jobOffreRepository;
     IEmailService emailSender;
+
     UserService userService;
+
+    UserRepository userRepository;
+
+
+    IUser iUser;
+
     @Override
     public List<JobOffer> findAllByPrice() {
         return jobOffreRepository.findAllByOrderByPrice();
@@ -40,10 +48,26 @@ public class JobOffreService implements IJobOffre {
 
     }
 
-    @Override
+   /* @Override
     public JobOffer updateJobOffer(JobOffer jobOffer) {
+
         return jobOffreRepository.save(jobOffer);
-    }
+    }*/
+   @Override
+   public JobOffer updateJobOffer (JobOffer jobOffer,Long idJob){
+
+       JobOffer existingJobOffre = jobOffreRepository.findById(idJob).orElse(null);
+       existingJobOffre.setDescription(jobOffer.getDescription());
+       existingJobOffre.setPrice(jobOffer.getPrice());
+       existingJobOffre.setOffretype(jobOffer.getOffretype());
+       existingJobOffre.setBeginnigDate(jobOffer.getBeginnigDate());
+       existingJobOffre.setEndDate(jobOffer.getEndDate());
+       existingJobOffre.setTitle(jobOffer.getTitle());
+       existingJobOffre.setNbintereteds(jobOffer.getNbintereteds());
+
+       return jobOffreRepository.save(existingJobOffre);
+   }
+
 
     @Override
     public void deleteJobOffer(long id) {
@@ -123,7 +147,7 @@ public class JobOffreService implements IJobOffre {
                 if (jobOffer.getOffretype().toUpperCase(Locale.ROOT).equals("OFFRE")) {
                     countoffretype++;
                 } else
-                    countoffretype++;
+                    countdemandetype++;
             }
 
         }
@@ -140,6 +164,37 @@ public class JobOffreService implements IJobOffre {
     @Override
     public List<JobOffer> filterByOffretype(String offretype) {
         return this.jobOffreRepository.filterByOffreType(offretype);
+    }
+    @Override
+    public void interestOffre (long id) {
+        /*this.jobOffreRepository.interestOffre(id);*/
+
+    }
+    ///////////////////interesser
+    @Override
+    public JobOffer interesser(Long idJob, Long idUser) {
+        jobOffreRepository.incrementerNbInteresses(idJob);
+        User user = userRepository.findById(idUser).get();
+        JobOffer jobOffer =jobOffreRepository.findById(idJob).get();
+
+        for (User u:jobOffer.getInterestedUserss()) {
+            if (u.equals(user)){
+                return null;
+            }
+
+        }
+
+        jobOffer.getInterestedUserss().add(user);
+        user.getOffreInterested().add(jobOffer);
+        jobOffreRepository.save(jobOffer);
+        userRepository.save(user);
+        return jobOffer;
+
+
+    }
+    @Override
+    public List<JobOffer> searchJobOffer(String title, String offretype, Integer price, String localisation, String beginnigDate, String endDate) {
+        return jobOffreRepository.searchJobOffer(title, offretype, price, localisation, beginnigDate, endDate);
     }
 
 
