@@ -29,4 +29,6 @@ public interface IJobOffre {
 
     ///////////////////interesser
     JobOffer interesser(Long idJob, Long idUser);
+
+    List<JobOffer> searchJobOffer(String title, String offretype, Integer price, String localisation, String beginnigDate, String endDate);
 }

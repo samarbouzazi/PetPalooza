@@ -1,7 +1,6 @@
 package petpalooza.Services;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import petpalooza.Entities.JobOffer;
 import petpalooza.Entities.User;
@@ -148,7 +147,7 @@ public class JobOffreService implements IJobOffre {
                 if (jobOffer.getOffretype().toUpperCase(Locale.ROOT).equals("OFFRE")) {
                     countoffretype++;
                 } else
-                    countoffretype++;
+                    countdemandetype++;
             }
 
         }
@@ -192,6 +191,10 @@ public class JobOffreService implements IJobOffre {
         return jobOffer;
 
 
+    }
+    @Override
+    public List<JobOffer> searchJobOffer(String title, String offretype, Integer price, String localisation, String beginnigDate, String endDate) {
+        return jobOffreRepository.searchJobOffer(title, offretype, price, localisation, beginnigDate, endDate);
     }
 
 

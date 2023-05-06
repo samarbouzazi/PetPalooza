@@ -22,7 +22,7 @@ public class JobOffer implements Serializable  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     Long idJob;
-    float price;
+    Integer price;
     @Temporal (TemporalType.DATE)
     Date beginnigDate;
     @Temporal (TemporalType.DATE)
@@ -31,9 +31,12 @@ public class JobOffer implements Serializable  {
     String description;
     String offretype;
     int nbintereteds;
+    String localisation;
+    private String image ;
     @ManyToMany()
     @JsonIgnore
     private Set<User> interestedUserss ;
+
 
 
 

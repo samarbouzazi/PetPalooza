@@ -1,5 +1,6 @@
 package petpalooza.RestControllers;
 
+import com.google.gson.Gson;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.stripe.exception.StripeException;
@@ -9,6 +10,8 @@ import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import petpalooza.Entities.Event;
 import petpalooza.Entities.JobOffer;
 import petpalooza.Entities.User;
 import petpalooza.Repositories.JobOffreRepository;
@@ -20,7 +23,10 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -51,7 +57,22 @@ public class JobOffreController {
     }
 
     @PostMapping("/addoffre")
-    public JobOffer addJobOffer(@RequestBody JobOffer jobOffer) {
+    public JobOffer addJobOffer(
+        @RequestParam("offre") String job,
+                @RequestParam("image") MultipartFile file
+    ) throws IOException {
+              JobOffer jobOffer = new Gson().fromJson(job, JobOffer.class);
+
+
+            String image=file.getOriginalFilename();
+            String path="C://xampp/htdocs/img";
+
+            byte[] bytes = image.getBytes();
+            int image2=bytes.toString().hashCode();
+            Files.copy(file.getInputStream(), Paths.get(path+ File.separator+image2+".jpg"));
+
+            jobOffer.setImage(""+image2);
+
         return iJobOffre.addJobOffer(jobOffer);
     }
 
@@ -94,7 +115,7 @@ public class JobOffreController {
     public JobOffer intersted(@PathVariable("idJob") Long idJob, @PathVariable("idUser") Long idUser){
         return iJobOffre.interesser(idJob,idUser);
     }
-    ////PAIEMENT/////
+    ////PAIEMENT/////(front)
 
     @PostMapping("/pay")
     public ResponseEntity<String> charge(@RequestParam("token") String token, @RequestParam("amount") int amount) {
@@ -133,6 +154,20 @@ public class JobOffreController {
         ServletOutputStream outputStream = response.getOutputStream();
         baos.writeTo(outputStream);
         outputStream.flush();
+    }
+    @GetMapping("/search")//hedhi supposed post :) bech tab3eth request bech tsearchi bil attribut te3ik
+    public List<JobOffer> searchJobOffer(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String offretype,
+            @RequestParam(required = false) Integer price,
+            @RequestParam(required = false) String localisation,
+            @RequestParam(required = false) String beginnigDate,
+            @RequestParam(required = false) String endDate) {
+
+        // Call your service method that returns the list of events filtered by the search query
+        List<JobOffer> jobOffers = iJobOffre.searchJobOffer(title, offretype, price, localisation, beginnigDate, endDate);
+
+        return jobOffers;
     }
 
 
