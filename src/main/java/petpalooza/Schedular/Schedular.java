@@ -24,7 +24,7 @@ public class Schedular {
     @Autowired
     IEmailService emailService;
 
-    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = "0 33 10 * * *")
     public void sendEmails() {
         Date today = new Date();
         Calendar tomorrow = Calendar.getInstance();

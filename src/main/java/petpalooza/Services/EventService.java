@@ -1,11 +1,13 @@
 package petpalooza.Services;
 
 import lombok.Data;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import petpalooza.DTO.CountType;
 import petpalooza.Entities.Event;
 import petpalooza.Entities.TypeEvent;
@@ -13,11 +15,15 @@ import petpalooza.Entities.User;
 import petpalooza.Repositories.EventRepository;
 import petpalooza.Repositories.UserRepository;
 import petpalooza.Services.userServices.IUser;
-
 import javax.validation.constraints.Null;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -37,14 +43,42 @@ public class EventService implements IEvent {
         return eventRepository.findAll();
     }
 
+//    @Override
+//    public Event updateEvent(Event event) {
+//        return eventRepository.save(event);
+//    }
+
+
     @Override
-    public Event updateEvent(Event event) {
-        return eventRepository.save(event);
+    public Event updateEvent(Event event,Long id){
+
+
+    Event existingEvent = eventRepository.findById(id).orElse(null);
+        existingEvent.setTitre(event.getTitre());
+        existingEvent.setType(event.getType());
+        existingEvent.setDescription(event.getDescription());
+        existingEvent.setLocation(event.getLocation());
+        existingEvent.setDateDebut(event.getDateDebut());
+        existingEvent.setDateFin(event.getDateFin());
+        existingEvent.setMaxParticipants(event.getMaxParticipants());
+
+        return eventRepository.save(existingEvent);
+}
+    @Override
+    public Event retrieveEvent(Long id) {
+        return this.eventRepository.findById(id).get();
     }
 
-    @Override
-    public Event addeEvent(Event event) {
 
+
+//    @Override
+//    public Event addeEvent(Event event) {
+//
+//        return eventRepository.save(event);
+//    }
+
+    @Override
+    public Event addeEvent(Event event){
         return eventRepository.save(event);
     }
 

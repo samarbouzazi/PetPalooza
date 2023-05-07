@@ -58,6 +58,5 @@ public class Animal implements Serializable  {
     List<RatingAnimal> ratings;
 
     @ManyToMany(mappedBy = "interestedAnimals", cascade = CascadeType.ALL)
-    @JsonIgnore
     List<User> interestedUsers;
 }

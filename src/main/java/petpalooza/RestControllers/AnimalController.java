@@ -70,7 +70,7 @@ public class AnimalController {
 
 
         String image=file.getOriginalFilename();
-        String path="C://xampp/htdocs/img";
+        String path="C://wamp64/www/img";
 
         byte[] bytes = image.getBytes();
         int image2=bytes.toString().hashCode();
