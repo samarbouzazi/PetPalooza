@@ -7,17 +7,24 @@ import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import petpalooza.Entities.Event;
+
 import petpalooza.Entities.JobOffer;
 import petpalooza.Entities.User;
 import petpalooza.Repositories.JobOffreRepository;
 import petpalooza.Services.IJobOffre;
+
 import petpalooza.Services.PaiementJobService;
 import petpalooza.Services.userServices.UserService;
+
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -37,7 +44,10 @@ import java.util.List;
 
 public class JobOffreController {
 
+    @Autowired
     IJobOffre iJobOffre;
+
+    @Autowired
     JobOffreRepository jobOffreRepository;
 
     UserService userService;

@@ -84,27 +84,28 @@ public class EventController {
 //        emailService.sendSimpleMail(event);
 //        return iEvent.addeEvent(event,image);
 //    }
+public void hello(){
 
+}
 
+    public void hello2(){
+
+    }
 
     @PostMapping("/addev")
-    public Event addEvent(
+    public void addEvent(
             @RequestParam("event") String ev,
             @RequestParam("image")MultipartFile file
     ) throws IOException {
         Event event = new Gson().fromJson(ev, Event.class);
-
-
         String image=file.getOriginalFilename();
         String path="C://wamp64/www/img";
-
         byte[] bytes = image.getBytes();
         int image2=bytes.toString().hashCode();
         Files.copy(file.getInputStream(), Paths.get(path+ File.separator+image2+".jpg"));
-
         event.setImage(""+image2);
-
-        return iEvent.addeEvent(event);
+        emailService.sendSimpleMail(event);
+        iEvent.addeEvent(event);
     }
 
 //    @PostMapping ("/addev")
@@ -148,13 +149,16 @@ public class EventController {
     }
 
 
-
     // Sending a simple Email
 //    @PostMapping("/sendMail")
 //    public String sendMail(@RequestBody Email details) {
 //        String status = emailService.sendSimpleMail(details);
 //        return status;
 //    }
+
+
+
+
 
     // Sending email with attachment
     @PostMapping("/sendMailWithAttachment")
@@ -219,7 +223,18 @@ public class EventController {
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(bais));
     }
 
+    @GetMapping("")
+    public List<Event> searchEvents(
+            @RequestParam(required = false) String titre,
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) Integer maxParticipants,
+            @RequestParam(required = false) String location,
+            @RequestParam(required = false) String dateDebut,
+            @RequestParam(required = false) String dateFin) {
 
-
+        // Call your service method that returns the list of events filtered by the search query
+        List<Event> events = iEvent.searchEvents(titre, type, maxParticipants, location, dateDebut, dateFin);
+        return events;
+    }
 
 }

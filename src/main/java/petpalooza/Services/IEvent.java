@@ -41,6 +41,9 @@ public interface IEvent {
     public List<CountType> statistique();
 
 
+    public List<Event> search(String keyword);
 
+
+    public List<Event> searchEvents(String titre, String type, Integer maxParticipants, String location, String dateDebut, String dateFin);
 
 }
