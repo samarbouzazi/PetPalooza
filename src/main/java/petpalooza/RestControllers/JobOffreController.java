@@ -2,12 +2,12 @@ package petpalooza.RestControllers;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import petpalooza.Entities.Animal;
 import petpalooza.Entities.JobOffer;
 import petpalooza.Repositories.JobOffreRepository;
 import petpalooza.Services.IJobOffre;
-import petpalooza.Services.JobOffreService;
+
 
 import java.util.List;
 
@@ -18,7 +18,10 @@ import java.util.List;
 
 public class JobOffreController {
 
+    @Autowired
     IJobOffre iJobOffre;
+
+    @Autowired
     JobOffreRepository jobOffreRepository;
 
     @GetMapping("/listeoffre")

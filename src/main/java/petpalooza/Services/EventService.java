@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-@Data
 public class EventService implements IEvent {
 
     @Autowired
@@ -174,48 +173,26 @@ public class EventService implements IEvent {
 //        collect.forEach(System.out::println);
         return eventRepository.findAll().stream().filter(event -> event.getTitre()!=null )
                 .filter(event -> event.getTitre().contains(s)  ).collect(Collectors.toList());
-        //return eventRepository.findAll();
-        //eventRepository.findAll().stream().filter(event -> event.getTitre().equals("Don VacPets")).forEach(System.out::println);
-
 
     }
 
 
-//    public List<Event> search(String s) {
-//
-//        return eventRepository.findAll().stream().filter(event -> event.getTitre()!=null
-//                        || event.getDescription()!=null
-//                        || event.getLocation()!=null
-//                        || event.getType()!=null)
-//                .filter(event -> event.getTitre().equals(s)
-//                        || event.getType().equals(s)
-//                        || event.getDescription().equals(s)
-//                        || event.getLocation().equals(s)
-//                ).collect(Collectors.toList());
-//        //        Stream<Event> stream = eventRepository.findAll().stream();
-//        //        List<Event> collect = stream.filter(e -> e.getTitre().equals(s)).collect(Collectors.toList());
-//        //        collect.forEach(System.out::println);
-//       //eventRepository.findAll().stream().filter(event -> event.getTitre().equals("Don VacPets")).forEach(System.out::println);
-//
-//
-//    }
+
+    @Override
+    public List<Event> search(String keyword) {
+        return null;}
 
 
-//    searchUsers() {
-//        if (this.searchTerm) {
-//            console.log(this.searchTerm);
-//            this.filteredUsers = this.users.filter((user) => {
-//            return Object.values(user).some((value) => {
-//            if (typeof value === 'string' && value.includes('+')) {
-//                value = value.replace(/\D/g, ''); // remove all non-digit characters
-//                if (value.toString().includes(this.searchTerm.toString())) {
-//                    return true;
-//                }
-//            } else if (typeof value === 'string' |
-//                    onInputChange(event: any) {
-//                this.searchTerm = event.target.value;
-//                this.searchUsers();
-//            }
 
+
+
+
+    ///////////test recherche////////////////
+
+
+@Override
+    public List<Event> searchEvents(String titre, String type, Integer maxParticipants, String location, String dateDebut, String dateFin) {
+        return eventRepository.searchEvents(titre, type, maxParticipants, location, dateDebut, dateFin);
+    }
 
 }

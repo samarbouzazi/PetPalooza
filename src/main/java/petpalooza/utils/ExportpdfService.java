@@ -12,19 +12,22 @@ import java.util.stream.Stream;
 
 @Service
 public class ExportpdfService {
-    public  ByteArrayInputStream eventExport(List<Event> events) {
+
+    public ByteArrayInputStream eventExport(List<Event> events) {
         Document document = new Document();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
+
         try {
             PdfWriter.getInstance(document, out);
             document.open();
+
             com.itextpdf.text.Font font = FontFactory.getFont(FontFactory.COURIER, 14, BaseColor.BLACK);
             Paragraph para = new Paragraph("Liste des evenements", font);
             para.setAlignment(Element.ALIGN_CENTER);
             document.add(para);
             document.add(Chunk.NEWLINE);
-            PdfPTable table = new PdfPTable(5);
 
+            PdfPTable table = new PdfPTable(5);
 
             Stream.of("titre", "description", "datedebut", "datefin","Les participants").forEach(headerTitle -> {
                 PdfPCell header = new PdfPCell();
@@ -43,13 +46,11 @@ public class ExportpdfService {
                 NomCell.setHorizontalAlignment(Element.ALIGN_LEFT);
                 table.addCell(NomCell);
 
-
                 PdfPCell adresseCell = new PdfPCell(new Phrase(event.getDescription()));
                 adresseCell.setPaddingLeft(1);
                 adresseCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 adresseCell.setHorizontalAlignment(Element.ALIGN_LEFT);
                 table.addCell(adresseCell);
-
 
                 PdfPCell emailCell = new PdfPCell(new Phrase(String.valueOf(event.getDateDebut())));
                 emailCell.setPaddingLeft(1);
@@ -68,13 +69,14 @@ public class ExportpdfService {
                 telCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 telCell.setHorizontalAlignment(Element.ALIGN_LEFT);
                 table.addCell(userCell);
-
             }
+
             document.add(table);
             document.close();
         } catch (DocumentException e) {
             e.printStackTrace();
         }
+
         return new ByteArrayInputStream(out.toByteArray());
     }
 }
