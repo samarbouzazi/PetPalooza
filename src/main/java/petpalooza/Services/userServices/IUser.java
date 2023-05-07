@@ -32,4 +32,10 @@ public interface IUser {
 
 
 
+
+    //////
+    public List<User> getRole(Long idUser);
+
+
+
 }

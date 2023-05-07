@@ -9,7 +9,7 @@ public interface IJobOffre {
     public List<JobOffer> findAllByPrice() ;
 
     public JobOffer addJobOffer(JobOffer jobOffer);
-    public JobOffer updateJobOffer(JobOffer jobOffer);
+    public JobOffer updateJobOffer(JobOffer jobOffer,Long idJob);
     public void deleteJobOffer(long id);
     public List<JobOffer> getAllJobOffers();
     public JobOffer getById (long id);
@@ -24,4 +24,11 @@ public interface IJobOffre {
     List<JobOffer> search(float price);
 
     public List<JobOffer> filterByOffretype(String offretype);
+
+    abstract void interestOffre(long id);
+
+    ///////////////////interesser
+    JobOffer interesser(Long idJob, Long idUser);
+
+    List<JobOffer> searchJobOffer(String title, String offretype, Integer price, String localisation, String beginnigDate, String endDate);
 }

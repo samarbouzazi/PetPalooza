@@ -32,7 +32,7 @@ public interface UserRepository extends JpaRepository<User,Long>, PagingAndSorti
     User findByResetPasswordToken( String tocken);
 
 
-
+    List<User> findUserByRoles(ERole name);
 
    ///////////
 

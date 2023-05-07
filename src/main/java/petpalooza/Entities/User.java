@@ -72,12 +72,12 @@ public class User implements Serializable {
     }
 
 ////chat ///////
-    @ManyToMany
-    @JoinTable(
-            name = "user_chat",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "idMessage"))
-    Set<ChatMessage> chatMessageSet= new HashSet<>();
+//    @ManyToMany
+//    @JoinTable(
+//            name = "user_chat",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "idMessage"))
+//    Set<ChatMessage> chatMessageSet= new HashSet<>();
 
 //////profile_relation//////
   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -122,6 +122,9 @@ public class User implements Serializable {
     private List<JobOffer> jobOfferss;
     @ElementCollection
     private List<String> interests = new ArrayList<>(); // ajout de la liste des intérêts
+    @ManyToMany(mappedBy = "interestedUserss" ,cascade = CascadeType.ALL)
+    private Set<JobOffer> offreInterested;
+
 
     /////////Iskander/////////////
     @OneToMany

@@ -6,16 +6,14 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import petpalooza.Entities.ChatMessage;
-import petpalooza.Entities.User;
 
 @Controller
 public class ChatController {
 
     @MessageMapping("/chat.register")
-    @SendTo("/public/public")
+    @SendTo("/topic/public")
     public ChatMessage register(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
-        User user=new User();
-        headerAccessor.getSessionAttributes().put(/*"username"*/ user.getUsername(), chatMessage.getUserID());
+        headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
         return chatMessage;
     }
 
@@ -25,6 +23,5 @@ public class ChatController {
         return chatMessage;
     }
 
-}
 
-
+    }

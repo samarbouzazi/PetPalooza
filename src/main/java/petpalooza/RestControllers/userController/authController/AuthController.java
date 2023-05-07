@@ -14,6 +14,7 @@ import petpalooza.Entities.Role;
 import petpalooza.Entities.User;
 import petpalooza.Repositories.RoleRepository;
 import petpalooza.Repositories.UserRepository;
+import petpalooza.Services.userServices.CustomHttpStatus;
 import petpalooza.security.jwt.JwtUtils;
 import petpalooza.security.payload.request.LoginRequest;
 import petpalooza.security.payload.request.SignupRequest;
@@ -56,7 +57,7 @@ public class AuthController {
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
     String jwt = jwtUtils.generateJwtToken(authentication);
-    
+
     UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
     List<String> roles = userDetails.getAuthorities().stream()
         .map(item -> item.getAuthority())
@@ -66,24 +67,32 @@ public class AuthController {
 
     return ResponseEntity.ok(new JwtResponse(jwt,
                          userDetails.getIdUser(),
-                         userDetails.getUsername(), 
-                         userDetails.getEmail(), 
+                         userDetails.getUsername(),
+                         userDetails.getEmail(),
                          roles));
   }
 
   @PostMapping("/register")
   public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
     if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-      return ResponseEntity
-          .badRequest()
-          .body(new MessageResponse("Error: Username is already taken!"));
-    }
+//      return ResponseEntity
+//          .badRequest()
+//          .body(new MessageResponse("Error: Username is already taken!"));
+//    }
 
-    if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-      return ResponseEntity
-          .badRequest()
-          .body(new MessageResponse("Error: Email is already in use!"));
+      return ResponseEntity.status(CustomHttpStatus.USERNAME_ALREADY_TAKEN.value())
+              .body(new MessageResponse("Error: Username is already taken!" + CustomHttpStatus.USERNAME_ALREADY_TAKEN.value()));
     }
+    if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+      return ResponseEntity.status(CustomHttpStatus.EMAIL_ALREADY_IN_USE.value())
+              .body(new MessageResponse("Error: Email is already in use!" + CustomHttpStatus.EMAIL_ALREADY_IN_USE.value()));
+
+
+    }
+//      return ResponseEntity
+//          .badRequest()
+//          .body(new MessageResponse("Error: Email is already in use!"));
+//    }
 
     // Create new user's account
     User user = new User(signUpRequest.getUsername(),

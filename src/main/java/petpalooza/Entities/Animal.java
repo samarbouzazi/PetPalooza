@@ -21,17 +21,19 @@ import java.util.*;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Animal implements Serializable  {
 
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long idAnimal;
     private String nameAnimal;
-   // @JsonFormat(pattern = "YYYY-MM-DD")
+
+
     @Temporal(TemporalType.DATE)
     private Date birthDate;
     private String race;
     private String description;
     private String gender;
     private String image;
+
     private int likes;
     public void setLikes(int likes) {this.likes = likes;
     }
@@ -44,12 +46,17 @@ public class Animal implements Serializable  {
     User userAnimal;
 
     @OneToMany(mappedBy = "animal")
+
+    // ,cascade = CascadeType.ALL)
+   // @JsonIgnore
+    //orphanRemoval = true
+
             // ,cascade = CascadeType.ALL)
     @JsonIgnore
             //orphanRemoval = true
+
     List<RatingAnimal> ratings;
 
     @ManyToMany(mappedBy = "interestedAnimals", cascade = CascadeType.ALL)
-    @JsonIgnore
     List<User> interestedUsers;
 }

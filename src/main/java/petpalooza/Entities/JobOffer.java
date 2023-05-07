@@ -8,6 +8,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "JobOffer")
@@ -17,11 +18,10 @@ import java.util.Date;
 @NoArgsConstructor
 
 public class JobOffer implements Serializable  {
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     Long idJob;
-    float price;
+    Integer price;
     @Temporal (TemporalType.DATE)
     Date beginnigDate;
     @Temporal (TemporalType.DATE)
@@ -29,6 +29,15 @@ public class JobOffer implements Serializable  {
     String title;
     String description;
     String offretype;
+    int nbintereteds;
+    String localisation;
+    private String image ;
+    @ManyToMany()
+    @JsonIgnore
+    private Set<User> interestedUserss ;
+
+
+
 
 
 
