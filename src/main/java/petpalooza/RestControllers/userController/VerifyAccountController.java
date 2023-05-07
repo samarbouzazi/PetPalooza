@@ -60,7 +60,7 @@ static  String linkk="";
         helper.setTo(email);
 //       String li="http://localhost:8088/"+"verifyAccountLink?email"+email;
 
-       String Ang="http://localhost:4200/public/user/verifyAccountLink/?email="+ email;
+       String Ang="http://localhost:4200/verifyAccountLink/?email="+ email;
 //        System.out.println("the link static is"+ li);
 
         String  vLink="http://localhost:8888/public/user/verifyAccountLink/?email="+email;
@@ -141,6 +141,8 @@ static  String linkk="";
 
         helper.setSubject(subject);
         helper.setText(content, true);
+
+        System.out.println("email is sending    !!");
         mailSender.send(message);
     }
 

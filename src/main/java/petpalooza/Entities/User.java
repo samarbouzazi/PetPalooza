@@ -72,12 +72,12 @@ public class User implements Serializable {
     }
 
 ////chat ///////
-    @ManyToMany
-    @JoinTable(
-            name = "user_chat",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "idMessage"))
-    Set<ChatMessage> chatMessageSet= new HashSet<>();
+//    @ManyToMany
+//    @JoinTable(
+//            name = "user_chat",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "idMessage"))
+//    Set<ChatMessage> chatMessageSet= new HashSet<>();
 
 //////profile_relation//////
   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
